@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class MessagesView extends StatelessWidget {
+  const MessagesView({super.key});
+  static String id = 'messages_view';
 
-class MyApp extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
     final appBarColor = Color(0xFF064789);
     final buttonColor = Color(0xFF002C3E);
@@ -110,7 +108,8 @@ class MyApp extends StatelessWidget {
                 color: Colors.white,
                 width: 70.0,
                 height: 40.0,
-                margin: EdgeInsets.only(bottom: 10.0), // Agrega espacio entre los recuadros blancos
+                margin: EdgeInsets.only(
+                    bottom: 10.0), // Agrega espacio entre los recuadros blancos
                 padding: EdgeInsets.all(10.0),
                 child: Text(
                   'Autor',
@@ -133,5 +132,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-
 }
