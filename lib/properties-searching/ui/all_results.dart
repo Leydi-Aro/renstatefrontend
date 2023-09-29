@@ -9,7 +9,7 @@ class AllResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return (Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
+      body: SingleChildScrollView(
           child: Center(
               child: Container(
                   width: 320,
@@ -51,7 +51,7 @@ class AllResults extends StatelessWidget {
                             letterSpacing: 0.52,
                           ),
                         ),
-                        Center(
+                        SingleChildScrollView(
                           child: Column(
                             children: [
                               Card(
