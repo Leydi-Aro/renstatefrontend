@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:renstatefrontend/properties-searching/ui/all_results.dart';
 import 'package:renstatefrontend/ui-initial-section/init_view.dart';
 import '../router/routes.dart';
 

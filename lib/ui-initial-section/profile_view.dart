@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
+import 'package:renstatefrontend/ui-mesagge/messages_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -184,15 +186,15 @@ class ProfileView extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // Navigate to the posts view
+                          Navigator.pushNamed(context, MessagesView.id);
                         },
-                        child: Text('Posts'),
+                        child: Text('Message'),
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Navigate to the Clients view
+                          Navigator.pushNamed(context, SearchPage.id);
                         },
-                        child: Text('Clients'),
+                        child: Text('Search'),
                       ),
                     ],
                   ),
