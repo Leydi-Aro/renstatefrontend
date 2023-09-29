@@ -7,36 +7,36 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-        body: SafeArea(
-            child: Container(
-                width: 375,
-                height: 700,
-                margin: const EdgeInsets.all(10),
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(color: Colors.white),
-                child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                          //Label Search
-                          'Search',
-                          style: TextStyle(
-                            color: Color(0xFF064789),
-                            fontSize: 36,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          )),
-                      Padding(padding: EdgeInsets.all(8)),
-                      TextField(
-                          style: TextStyle(fontFamily: 'Inter'),
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.search),
-                          )),
-                      Center(
-                        //BUTTONS
-                        child: Column(
+      body: SafeArea(
+          child: Center(
+              child: Container(
+                  width: 320,
+                  height: 700,
+                  margin: const EdgeInsets.all(15),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(padding: EdgeInsets.all(20)),
+                        Text(
+                            //Label Search
+                            'Search',
+                            style: TextStyle(
+                              color: Color(0xFF064789),
+                              fontSize: 36,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            )),
+                        Padding(padding: EdgeInsets.all(8)),
+                        TextField(
+                            style: TextStyle(fontFamily: 'Inter'),
+                            maxLines: 1,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              suffixIcon: Icon(Icons.search),
+                            )),
+                        Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             SizedBox(height: 30),
@@ -121,7 +121,40 @@ class SearchPage extends StatelessWidget {
                             ), //Viviendas
                           ],
                         ),
-                      )
-                    ])))));
+                      ])))),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels:
+            false, // Oculta el texto de los elementos seleccionados
+        showUnselectedLabels:
+            false, // Oculta el texto de los elementos no seleccionados
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            //home
+            icon: Icon(Icons.home, color: Colors.black),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            //search
+            icon: Icon(Icons.search, color: Colors.black),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            //add
+            icon: Icon(Icons.add, color: Colors.black),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            //message
+            icon: Icon(Icons.message, color: Colors.black),
+            label: 'Message',
+          ),
+          BottomNavigationBarItem(
+            //profile
+            icon: Icon(Icons.person, color: Colors.black),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    ));
   }
 }
