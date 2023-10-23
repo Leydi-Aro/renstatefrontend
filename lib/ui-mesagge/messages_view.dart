@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
 class MessagesView extends StatelessWidget {
   const MessagesView({super.key});
@@ -30,61 +31,7 @@ class MessagesView extends StatelessWidget {
                 ],
               ),
             ),
-            BottomAppBar(
-              child: Container(
-                height: 60.0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.home),
-                      onPressed: () {
-                        // Acción
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        // Acción
-                      },
-                    ),
-                    InkWell(
-                      // InkWell hace que el botón central sea interactivo
-                      onTap: () {
-                        // Acción
-                      },
-                      child: Container(
-                        width: 60.0,
-                        height: 60.0,
-                        decoration: BoxDecoration(
-                          color: buttonColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 36.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.chat),
-                      onPressed: () {
-                        // Acción
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.person),
-                      onPressed: () {
-                        // Acción
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            bottomNavigationApp(),
           ],
         ),
       ),

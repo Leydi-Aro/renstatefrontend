@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/properties-searching/ui/all_results.dart';
+import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -38,59 +39,66 @@ class SearchPage extends StatelessWidget {
             const Padding(padding: EdgeInsets.all(16.0)),
             Column(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AllResults.id);
-                  },
-                  child: const Text('Departamentos'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AllResults.id);
-                  },
-                  child: const Text('Locales Comerciales'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AllResults.id);
-                  },
-                  child: const Text('Cuartos'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AllResults.id);
-                  },
-                  child: const Text('Viviendas'),
-                ),
+
+                filterButton(
+                    context,
+                    "Department",
+                    (){
+                      Navigator.pushNamed(context, AllResults.id);
+                    }),
+                filterButton(
+                    context,
+                    "Home",
+                        (){
+                      Navigator.pushNamed(context, AllResults.id);
+                    }),
+                filterButton(
+                    context,
+                    "Commercial Space",
+                        (){
+                          Navigator.pushNamed(context, AllResults.id);
+                    }),
+                filterButton(
+                    context,
+                    "Room",
+                        (){
+                          Navigator.pushNamed(context, AllResults.id);
+                    }),
               ],
             ),
           ],
         ),
       )),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.black),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add, color: Colors.black),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message, color: Colors.black),
-            label: 'Message',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      bottomNavigationBar: bottomNavigationApp(),
     );
   }
+}
+
+
+Widget filterButton(context, String text, Function onPressed){
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 15.0),
+    child: FractionallySizedBox(
+      widthFactor: 0.8,
+      child: TextButton(
+          onPressed: (){
+            onPressed();
+      },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blueGrey),
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+            ),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          )
+      ),
+    ),
+  );
 }

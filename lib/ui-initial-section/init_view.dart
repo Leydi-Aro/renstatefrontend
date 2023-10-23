@@ -28,28 +28,53 @@ class InitView extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigate to the login view
-                    Navigator.pushNamed(context, LoginView.id);
-                  },
-                  child: Text('Login'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigate to the register view
-                    Navigator.pushNamed(context, RegisterView.id);
-                  },
-                  child: Text('Register'),
-                ),
-              ],
+            Container(
+              color: Colors.white,
+              height: 100.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buildStyledButton(
+                      "Login",
+                      (){
+                        Navigator.pushNamed(context, LoginView.id);
+                      }
+                  ),
+                  buildStyledButton(
+                    "Register",
+                    () {
+                      // Navigate to the register view
+                      Navigator.pushNamed(context, RegisterView.id);
+                    },
+                  )
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+ElevatedButton buildStyledButton(
+    String label,
+    Function onPressed,
+    ) {
+  return ElevatedButton(
+    onPressed: () {
+      onPressed();
+    },
+    child: Text(label, style: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 18.0,
+    )),
+    style: ElevatedButton.styleFrom(
+        primary: Colors.lightBlue,
+        shape:  RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(color: Colors.black, width: 1),
+        )
+    ),
+  );
 }

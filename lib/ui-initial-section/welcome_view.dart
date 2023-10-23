@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
+import 'package:renstatefrontend/shared/buttonApp.dart';
+import 'package:renstatefrontend/shared/logo.dart';
 import 'package:renstatefrontend/ui-initial-section/profile_view.dart';
 
 class WelcomeView extends StatelessWidget {
@@ -14,28 +17,14 @@ class WelcomeView extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              height: 280,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage('https://i.ibb.co/9T6qrHD/logoroom.png'),
-                ),
-              ),
-            ),
+            logo(),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'WELCOME',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 140, 214, 225),
-                    ),
-                  ),
+                  tittleWelcome(),
+                  SizedBox(height: 15.0), // Espacio vertical entre el título y el Card
                   Card(
                     color: Colors.white,
                     child: Padding(
@@ -45,25 +34,17 @@ class WelcomeView extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          Center(
-                            child: Text(
-                              'To complete your registration, we recommend that you complete your information to improve your profile',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 12, 11, 11),
-                              ),
-                            ),
-                          )
+                          textWelcome(),
                         ],
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
+                  SizedBox(height: 20.0), // Espacio vertical entre el Card y el botón
+                  buttonApp(
+                    "Profile",
+                        () {
                       Navigator.pushNamed(context, ProfileView.id);
                     },
-                    child: const Text('Profile'),
                   ),
                 ],
               ),
@@ -71,30 +52,32 @@ class WelcomeView extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.black),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add, color: Colors.black),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message, color: Colors.black),
-            label: 'Message',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.black),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      bottomNavigationBar: bottomNavigationApp(),
     );
   }
+}
+
+Widget tittleWelcome(){
+  return Text(
+    'WELCOME',
+    style: TextStyle(
+      fontSize: 25.0,
+      fontWeight: FontWeight.bold,
+      color: Color.fromARGB(255, 140, 214, 225),
+    ),
+  );
+}
+
+Widget textWelcome() {
+  return Center(
+    child: Text(
+      'To complete your registration, we recommend that you complete your information to improve your profile',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: Color.fromARGB(255, 12, 11, 11),
+      ),
+      textAlign: TextAlign.center,
+    ),
+  );
 }

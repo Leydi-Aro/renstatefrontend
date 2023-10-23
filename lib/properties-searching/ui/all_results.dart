@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
 class AllResults extends StatelessWidget {
-  // final List<String> _elementos;
   static const String id = 'allresult';
   const AllResults({super.key});
 
@@ -10,241 +10,157 @@ class AllResults extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-          child: Center(
-              child: Container(
-                  width: 320,
-                  height: 700,
-                  margin: const EdgeInsets.all(15),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(padding: EdgeInsets.all(20)),
-                        Text(
-                            //Label Search
-                            'Search',
-                            style: TextStyle(
-                              color: Color(0xFF064789),
-                              fontSize: 36,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            )),
-                        Padding(padding: EdgeInsets.all(8)),
-                        TextField(
-                            style: TextStyle(fontFamily: 'Inter'),
-                            maxLines: 1,
-                            // Navega a la segunda pantalla,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              suffixIcon: Icon(Icons.search),
-                            )),
-                        Padding(padding: EdgeInsets.all(10)),
-                        Text(
-                          'ALL RESULTS',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 13,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w900,
-                            height: 0,
-                            letterSpacing: 0.52,
-                          ),
-                        ),
-                        Center(
-                          child: Column(
-                            children: [
-                              Card(
-                                  color: (Color(0xFF064789)),
-                                  //elevation: 5, // Si deseas agregar sombra
-                                  child: SizedBox(
-                                    width: 343,
-                                    height: 190,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(padding: EdgeInsets.all(3)),
-                                        Center(
-                                          child: Text(
-                                            'Título',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w900,
-                                              letterSpacing: 0.52,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 3)),
-                                        Center(
-                                          child: Text(
-                                            'S/. 9989',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w900,
-                                              letterSpacing: 0.52,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(3)),
-                                        Center(
-                                            child: Image(
-                                                image: NetworkImage(
-                                                    'https://ibb.co/5L2PZtZ'),
-                                                width: 15,
-                                                height: 15)),
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                            child: Text(
-                                              'Lorem lorem lorem\nlorem jd dggd l dldj s sgjs gs s ñgs gsjñ ',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 11,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(5)),
-                                        Center(
-                                          child: Text(
-                                            'Detalles',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: 0.52,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(3))
-                                      ],
-                                    ),
-                                  )),
-                              Card(
-                                  color: (Color(0xFF064789)),
-                                  //elevation: 5, // Si deseas agregar sombra
-                                  child: SizedBox(
-                                    width: 343,
-                                    height: 190,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(padding: EdgeInsets.all(3)),
-                                        Center(
-                                          child: Text(
-                                            'Título',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w900,
-                                              letterSpacing: 0.52,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 3)),
-                                        Center(
-                                          child: Text(
-                                            'S/. 9989',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w900,
-                                              letterSpacing: 0.52,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(3)),
-                                        Center(
-                                            child: Image(
-                                                image: NetworkImage(
-                                                    'https://ibb.co/5L2PZtZ'),
-                                                width: 15,
-                                                height: 15)),
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                            child: Text(
-                                              'Lorem lorem lorem\nlorem jd dggd l dldj s sgjs gs s ñgs gsjñ ',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 11,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(5)),
-                                        Center(
-                                          child: Text(
-                                            'Detalles',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: 0.52,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(3))
-                                      ],
-                                    ),
-                                  )),
-                            ],
-                          ),
-                        )
-                      ])))),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels:
-            false, // Oculta el texto de los elementos seleccionados
-        showUnselectedLabels:
-            false, // Oculta el texto de los elementos no seleccionados
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            //home
-            icon: Icon(Icons.home, color: Colors.black),
-            label: 'Home',
+        child: Center(
+          child: ListView(
+            children: [
+              Container(
+                margin: EdgeInsets.all(15),
+                decoration: BoxDecoration(color: Colors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    searchDesign(),
+                    tittleResult(),
+                    viewPost(),
+                    viewPost(),
+                    viewPost(),
+                  ],
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            //search
-            icon: Icon(Icons.search, color: Colors.black),
-            label: 'Search',
+        ),
+      ),
+      bottomNavigationBar: bottomNavigationApp(),
+    );
+  }
+}
+
+Widget searchDesign() {
+  return Column(
+    children: [
+      Text(
+        'Search',
+        style: TextStyle(
+          color: Color(0xFF064789),
+          fontSize: 36,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      TextField(
+        style: TextStyle(fontFamily: 'Inter'),
+        maxLines: 1,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          suffixIcon: Icon(Icons.search),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget tittleResult() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 15.0),
+    child: Text(
+      'ALL RESULTS',
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 20.0,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w900,
+        letterSpacing: 0.52,
+      ),
+    ),
+  );
+}
+
+Widget viewPost() {
+  return Card(
+    color: Color(0xFF064789),
+    elevation: 5,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(padding: EdgeInsets.all(3)),
+          Center(
+            child: Text(
+              "tittle",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0.55,
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            //add
-            icon: Icon(Icons.add, color: Colors.black),
-            label: 'Add',
+          SizedBox(height: 8.0),
+          Center(
+            child: Text(
+              'S/. 9989',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 13,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0.52,
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            //message
-            icon: Icon(Icons.message, color: Colors.black),
-            label: 'Message',
+          Padding(padding: EdgeInsets.all(5)),
+          Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.9,
+              child: Image(
+                image: NetworkImage(
+                  'https://images.pexels.com/photos/2079246/pexels-photo-2079246.jpeg?auto=compress&cs=tinysrgb&w=600',
+                ),
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            //profile
-            icon: Icon(Icons.person, color: Colors.black),
-            label: 'Profile',
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              child: Text(
+                'Lorem lorem lorem lorem jd dggd l dldj s sgjs gs s ñgs gsjñ ',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Center(
+            child: buttonDetails(),
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
+Widget buttonDetails() {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.blue,
+      borderRadius: BorderRadius.circular(5),
+    ),
+    child: TextButton(
+      child: Text(
+        'Detalles',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 13,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.52,
+        ),
+      ),
+      onPressed: () {},
+    ),
+  );
 }
