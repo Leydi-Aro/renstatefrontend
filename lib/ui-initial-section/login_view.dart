@@ -94,7 +94,7 @@ Widget notHaveAccount(context){
 
 Widget textLogin(){
     return Text(
-      'Login',
+      'Log In',
       style: TextStyle(
         fontSize: 40.0,
         fontWeight: FontWeight.bold,

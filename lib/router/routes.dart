@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/properties-searching/ui/all_results.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
+import 'package:renstatefrontend/properties-searching/ui/see_post.dart';
 import 'package:renstatefrontend/ui-mesagge/messages_view.dart';
 import 'package:renstatefrontend/ui-initial-section/init_view.dart';
 import 'package:renstatefrontend/ui-initial-section/profile_view.dart';
@@ -17,4 +18,5 @@ var customRoutes = <String, WidgetBuilder>{
   MessagesView.id: (_) => const MessagesView(),
   AllResults.id: (_) => const AllResults(),
   SearchPage.id: (_) => const SearchPage(),
+  SeePost.id: (_) => const SeePost(),
 };

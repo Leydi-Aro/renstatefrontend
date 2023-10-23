@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Widget buttonApp(String text, Function onPressed){
-  return FractionallySizedBox(
-    child: TextButton(
+  return TextButton(
       onPressed: (){
         onPressed();
       },
@@ -22,6 +21,5 @@ Widget buttonApp(String text, Function onPressed){
           color: Colors.black,
         ),
       ),
-    ),
   );
 }

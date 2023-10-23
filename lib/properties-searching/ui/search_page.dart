@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:renstatefrontend/properties-searching/ui/all_results.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
+import '../../shared/appBarApp.dart';
+
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
   static String id = 'search_page';
@@ -11,6 +13,7 @@ class SearchPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
+      appBar: appBarApp(context),
       body: Center(
           child: Container(
         width: 320,

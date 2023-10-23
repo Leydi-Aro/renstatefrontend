@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/properties-searching/ui/see_post.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
+
+import '../../shared/appBarApp.dart';
 
 class AllResults extends StatelessWidget {
   static const String id = 'allresult';
@@ -9,6 +12,7 @@ class AllResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: appBarApp(context),
       body: SafeArea(
         child: Center(
           child: ListView(
@@ -21,9 +25,9 @@ class AllResults extends StatelessWidget {
                   children: [
                     searchDesign(),
                     tittleResult(),
-                    viewPost(),
-                    viewPost(),
-                    viewPost(),
+                    viewPost(context),
+                    viewPost(context),
+                    viewPost(context),
                   ],
                 ),
               ),
@@ -34,6 +38,7 @@ class AllResults extends StatelessWidget {
       bottomNavigationBar: bottomNavigationApp(),
     );
   }
+
 }
 
 Widget searchDesign() {
@@ -75,7 +80,7 @@ Widget tittleResult() {
   );
 }
 
-Widget viewPost() {
+Widget viewPost(context) {
   return Card(
     color: Color(0xFF064789),
     elevation: 5,
@@ -87,10 +92,10 @@ Widget viewPost() {
           Padding(padding: EdgeInsets.all(3)),
           Center(
             child: Text(
-              "tittle",
+              "Tittle",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20.0,
+                fontSize: 25.0,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0.55,
               ),
@@ -102,7 +107,7 @@ Widget viewPost() {
               'S/. 9989',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 13,
+                fontSize: 18,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0.52,
               ),
@@ -123,10 +128,10 @@ Widget viewPost() {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               child: Text(
-                'Lorem lorem lorem lorem jd dggd l dldj s sgjs gs s ñgs gsjñ ',
+                'Lorem lorem lorem lorem jd dgg  l dldj s sgjs gs s ñgs gsjñ  d l dldj s sgjs gs s ñgs gsjñ Lorem lorem lorem lorem jd dggd l dldj s sgjs gs s ñgs gsjñ ',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 11,
+                  fontSize: 15,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
                 ),
@@ -135,7 +140,7 @@ Widget viewPost() {
             ),
           ),
           Center(
-            child: buttonDetails(),
+            child: buttonDetails(context),
           ),
         ],
       ),
@@ -143,7 +148,7 @@ Widget viewPost() {
   );
 }
 
-Widget buttonDetails() {
+Widget buttonDetails(context) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.blue,
@@ -154,13 +159,15 @@ Widget buttonDetails() {
         'Detalles',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 13,
+          fontSize: 18,
           fontFamily: 'Inter',
           fontWeight: FontWeight.w700,
           letterSpacing: 0.52,
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, SeePost.id);
+      },
     ),
   );
 }
