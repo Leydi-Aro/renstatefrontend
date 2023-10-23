@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
+import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/ui-mesagge/messages_view.dart';
@@ -15,8 +16,9 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromARGB(255, 7, 64, 129),
+      appBar: appBarApp(context),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             Column(
               children: [
@@ -89,8 +91,8 @@ Widget seePhoto(){
     padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
     child: ClipOval(
       child: Container(
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(

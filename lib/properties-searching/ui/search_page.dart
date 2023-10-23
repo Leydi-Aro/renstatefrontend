@@ -16,62 +16,55 @@ class SearchPage extends StatelessWidget {
       appBar: appBarApp(context),
       body: Center(
           child: Container(
-        width: 320,
-        height: 700,
-        margin: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            const Padding(padding: EdgeInsets.all(20)),
-            const Text(
-                //Label Search
-                'Search',
-                style: TextStyle(
-                  color: Color(0xFF064789),
-                  fontSize: 36,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                )),
-            const Padding(padding: EdgeInsets.all(8)),
-            const TextField(
-                style: TextStyle(fontFamily: 'Inter'),
-                maxLines: 1,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.search),
-                )),
-            const Padding(padding: EdgeInsets.all(16.0)),
-            Column(
+            width: 320,
+            height: 700,
+            margin: const EdgeInsets.all(15),
+            child: Column(
               children: [
+                const Padding(padding: EdgeInsets.all(20)),
+                const Text(
+                  //Label Search
+                    'Search',
+                    style: TextStyle(
+                      color: Color(0xFF064789),
+                      fontSize: 36,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    )
+                ),
+                const Padding(padding: EdgeInsets.all(16.0)),
+                Column(
+                  children: [
 
-                filterButton(
-                    context,
-                    "Department",
-                    (){
-                      Navigator.pushNamed(context, AllResults.id);
-                    }),
-                filterButton(
-                    context,
-                    "Home",
-                        (){
-                      Navigator.pushNamed(context, AllResults.id);
-                    }),
-                filterButton(
-                    context,
-                    "Commercial Space",
-                        (){
+                    filterButton(
+                        context,
+                        "Department",
+                            (){
                           Navigator.pushNamed(context, AllResults.id);
-                    }),
-                filterButton(
-                    context,
-                    "Room",
-                        (){
+                        }),
+                    filterButton(
+                        context,
+                        "Home",
+                            (){
                           Navigator.pushNamed(context, AllResults.id);
-                    }),
+                        }),
+                    filterButton(
+                        context,
+                        "Commercial Space",
+                            (){
+                          Navigator.pushNamed(context, AllResults.id);
+                        }),
+                    filterButton(
+                        context,
+                        "Room",
+                            (){
+                          Navigator.pushNamed(context, AllResults.id);
+                        }),
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
-      )),
+          )),
       bottomNavigationBar: bottomNavigationApp(),
     );
   }
