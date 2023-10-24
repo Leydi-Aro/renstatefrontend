@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
+import 'package:renstatefrontend/ui-profile/profile_author.dart';
 
 class SeePost extends StatefulWidget {
   const SeePost({super.key});
@@ -58,13 +59,21 @@ class _SeePostState extends State<SeePost> {
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Text(
-            "View author profile",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0,
-              color: Colors.blue,
+          child: GestureDetector(
+            child: Text(
+              "View author profile",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+                color: Colors.blue,
+              ),
             ),
+            onTap: (){
+              Navigator.push(
+                  context,
+                MaterialPageRoute(builder: (context)=> ProfileAuthor())
+              );
+            },
           ),
         ),
       ),

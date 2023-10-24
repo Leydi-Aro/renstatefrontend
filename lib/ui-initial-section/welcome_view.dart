@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/shared/logo.dart';
-import 'package:renstatefrontend/ui-initial-section/profile_view.dart';
+import 'package:renstatefrontend/ui-profile/profile_view.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});

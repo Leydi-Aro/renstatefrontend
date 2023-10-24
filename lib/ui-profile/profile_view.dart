@@ -3,7 +3,9 @@ import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
-import 'package:renstatefrontend/ui-mesagge/messages_view.dart';
+import 'package:renstatefrontend/ui-mesagge/receivedMessages.dart';
+
+import '../shared/showImageProfile.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -22,9 +24,12 @@ class ProfileView extends StatelessWidget {
           children: [
             Column(
               children: [
-                seePhoto(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: showImageProfile(),
+                ),
                 Text(
-                  'Rafael Lopez Perez',
+                  'Rafael LopezZ Perez',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -72,7 +77,10 @@ class ProfileView extends StatelessWidget {
                   buttonApp(
                       "Message",
                           (){
-                        Navigator.pushNamed(context, MessagesView.id);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=>ReceivedMessages())
+                        );
                       }
                   ),
                 ],
@@ -84,25 +92,6 @@ class ProfileView extends StatelessWidget {
       bottomNavigationBar: bottomNavigationApp(),
     );
   }
-}
-
-Widget seePhoto(){
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
-    child: ClipOval(
-      child: Container(
-        width: 130,
-        height: 130,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: NetworkImage('https://i.ibb.co/2SRXmjC/1077114.png'),
-          ),
-        ),
-      ),
-    ),
-  )
-  ;
 }
 
 Widget cardInfo(context, String info){
