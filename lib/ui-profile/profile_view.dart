@@ -56,33 +56,14 @@ class ProfileView extends StatelessWidget {
                   cardInfo(context, "rafael@gmail.com"),
                   cardInfo(context, "Here is description about of user"),
                   SizedBox(height: 20.0,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+
                       buttonApp(
                           "Save",
                               (){
 
                           }
                       ),
-                      buttonApp(
-                          "Search",
-                              (){
-                            Navigator.pushNamed(context, SearchPage.id);
-                          }
-                      ),
-                    ],
-                  ),
                   SizedBox(height: 15.0,),
-                  buttonApp(
-                      "Message",
-                          (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context)=>ReceivedMessages())
-                        );
-                      }
-                  ),
                 ],
               ),
             ),

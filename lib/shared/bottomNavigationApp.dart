@@ -7,7 +7,6 @@ import 'package:renstatefrontend/ui-mesagge/receivedMessages.dart';
 import 'package:renstatefrontend/ui-profile/profile_view.dart';
 
 BottomNavigationBar bottomNavigationApp(BuildContext context) {
-
   return BottomNavigationBar(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: Colors.blue,
@@ -61,7 +60,5 @@ BottomNavigationBar bottomNavigationApp(BuildContext context) {
           print("Index not found: $index");
       }
     },
-
   );
 }
-

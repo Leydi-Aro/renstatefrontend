@@ -110,14 +110,6 @@ class _MakePostState extends State<MakePost> {
     return FractionallySizedBox(
       widthFactor: 0.5,
       child: ElevatedButton(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text("Post",style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),),
-        ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF064789)),
         ),
@@ -129,6 +121,14 @@ class _MakePostState extends State<MakePost> {
           print("Price: ${priceController.text}");
           print("Category: $selectedCategory");
         },
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text("Post",style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),),
+        ),
       ),
     );
   }
