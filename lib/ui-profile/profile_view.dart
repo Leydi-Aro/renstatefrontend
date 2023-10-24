@@ -89,7 +89,7 @@ class ProfileView extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: bottomNavigationApp(),
+      bottomNavigationBar: bottomNavigationApp(context),
     );
   }
 }

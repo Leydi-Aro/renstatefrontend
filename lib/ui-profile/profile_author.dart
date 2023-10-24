@@ -44,7 +44,7 @@ class _ProfileAuthorState extends State<ProfileAuthor> {
           ],
         )
       ),
-      bottomNavigationBar: bottomNavigationApp(),
+      bottomNavigationBar: bottomNavigationApp(context),
     );
   }
 

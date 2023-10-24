@@ -52,7 +52,7 @@ class WelcomeView extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: bottomNavigationApp(),
+      bottomNavigationBar: bottomNavigationApp(context),
     );
   }
 }

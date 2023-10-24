@@ -30,7 +30,7 @@ class _SeePostState extends State<SeePost> {
           ],
         )
       ),
-      bottomNavigationBar: bottomNavigationApp(),
+      bottomNavigationBar: bottomNavigationApp(context),
     );
   }
 

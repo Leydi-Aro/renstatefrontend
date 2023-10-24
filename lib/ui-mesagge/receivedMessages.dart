@@ -29,7 +29,7 @@ class _ReceivedMessagesState extends State<ReceivedMessages> {
               ],
             ),
           ),
-          bottomNavigationApp(),
+          bottomNavigationApp(context),
         ],
       ),
     );

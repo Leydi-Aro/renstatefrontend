@@ -35,7 +35,7 @@ class AllResults extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavigationApp(),
+      bottomNavigationBar: bottomNavigationApp(context),
     );
   }
 
