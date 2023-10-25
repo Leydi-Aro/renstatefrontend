@@ -62,27 +62,17 @@ class ProfileView extends StatelessWidget {
                           }
                       ),
                       buttonApp(
-                          "Search",
-                              (){
-                            Navigator.pushNamed(context, SearchPage.id);
-                          }
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buttonApp(
                           "Message",
                               (){
                             Navigator.pushNamed(context, MessagesView.id);
                           }
-                      ),
-                      buttonApp("Your Clients", (){
-                        Navigator.pushNamed(context, ClientsView.id);
-                      })
+                      )
                     ],
+
                   ),
+                  buttonApp("Your Clients", (){
+                    Navigator.pushNamed(context, ClientsView.id);
+                  })
                 ],
               ),
             ),
