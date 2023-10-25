@@ -10,7 +10,7 @@ Widget buttonApp(String text, Function onPressed){
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.white70),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         ),
       ),
       child: Text(
