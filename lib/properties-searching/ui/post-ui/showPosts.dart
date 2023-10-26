@@ -68,7 +68,8 @@ class _ShowPostsState extends State<ShowPosts> {
 
   List<Widget> _listPosts(List<Post>data){
     List<Widget> posts = [];
-    posts.add(titleResult());
+
+    posts.add(categoryResult(data[0].category));
     posts.add(searchDesign());
     for (var post in data){
       posts.add(
@@ -190,14 +191,14 @@ Widget searchDesign() {
   );
 }
 
-Widget titleResult() {
+Widget categoryResult(String category) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 15.0),
     child: Text(
-      'ALL RESULTS',
+      category.toUpperCase()+'S',
       style: TextStyle(
         color: Colors.black,
-        fontSize: 20.0,
+        fontSize: 25.0,
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w900,
         letterSpacing: 0.52,
