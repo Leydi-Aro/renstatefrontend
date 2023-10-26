@@ -9,22 +9,34 @@ import '../../../shared/services/PostService.dart';
 
 
 class ShowPosts extends StatefulWidget {
-  const ShowPosts({super.key});
+  final String category;
+
+  ShowPosts(this.category);
 
   @override
-  State<ShowPosts> createState() => _ShowPostsState();
+  State<ShowPosts> createState() => _ShowPostsState(category);
 }
+
 
 class _ShowPostsState extends State<ShowPosts> {
 
+  final String category;
+
+  _ShowPostsState(this.category);
+
   final postService = PostService();
   late Future<List<Post>> _posts;
+
 
   @override
   void initState() {
     super.initState();
     _posts = postService.getPosts();
+    _posts = _posts.then((posts) {
+      return posts.where((post) => post.category == category).toList();
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {

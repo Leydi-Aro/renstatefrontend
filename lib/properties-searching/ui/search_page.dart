@@ -38,18 +38,18 @@ class SearchPage extends StatelessWidget {
 
                     filterButton(
                         context,
-                        "Department",
+                        "Departments",
                             (){
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=>ShowPosts())
+                              MaterialPageRoute(builder: (context)=>ShowPosts('department'))
                           );
                         }),
                     filterButton(
                         context,
-                        "Home",
+                        "Houses",
                             (){
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>ShowPosts())
+                                  MaterialPageRoute(builder: (context)=>ShowPosts('house'))
                               );
                         }),
                     filterButton(
@@ -57,15 +57,15 @@ class SearchPage extends StatelessWidget {
                         "Commercial Space",
                             (){
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>ShowPosts())
+                                  MaterialPageRoute(builder: (context)=>ShowPosts('commercialSpace'))
                               );
                         }),
                     filterButton(
                         context,
-                        "Room",
+                        "Rooms",
                             (){
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>ShowPosts())
+                                  MaterialPageRoute(builder: (context)=>ShowPosts('room'))
                               );
                         }),
                   ],
