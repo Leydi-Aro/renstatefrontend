@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:renstatefrontend/properties-searching/ui/all_results.dart';
+import 'package:renstatefrontend/properties-searching/ui/showPosts.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
 import '../../shared/appBarApp.dart';
@@ -40,25 +40,33 @@ class SearchPage extends StatelessWidget {
                         context,
                         "Department",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context)=>ShowPosts())
+                          );
                         }),
                     filterButton(
                         context,
                         "Home",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>ShowPosts())
+                              );
                         }),
                     filterButton(
                         context,
                         "Commercial Space",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>ShowPosts())
+                              );
                         }),
                     filterButton(
                         context,
                         "Room",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>ShowPosts())
+                              );
                         }),
                   ],
                 ),
