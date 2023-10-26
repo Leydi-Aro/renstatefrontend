@@ -50,7 +50,6 @@ class _ClientsViewState extends State<ClientsView> {
                   elevation: 5,
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: ListTile(
-                    title: Text("ID: ${clientData.index}"),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
