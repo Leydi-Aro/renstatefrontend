@@ -6,6 +6,7 @@ import 'package:renstatefrontend/ui-initial-section/init_view.dart';
 import 'package:renstatefrontend/ui-mesagge/receivedMessages.dart';
 import 'package:renstatefrontend/ui-profile/profile_view.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
+import 'package:renstatefrontend/ui-posts/posts.dart';
 import '../ui-initial-section/login_view.dart';
 import '../ui-initial-section/register_view.dart';
 
@@ -19,4 +20,5 @@ var customRoutes = <String, WidgetBuilder>{
   AllResults.id: (_) => const AllResults(),
   SearchPage.id: (_) => const SearchPage(),
   SeePost.id: (_) => const SeePost(),
+  PostsList.id: (_) => const PostsList(),
 };
