@@ -31,24 +31,6 @@ class ClientsView extends StatefulWidget {
 }
 
 class _ClientsViewState extends State<ClientsView> {
-  late DataTableSource _data;
-
-  @override
-  void initState(){
-    super.initState();
-    _data = MyData(context, (Clients client) {
-      setState(() {
-        listClients.removeWhere((element) => element.keys.first == client);
-      });
-    });
-  }
-  /*void deleteClient(int index){
-    print("Client delete: ${clients[index].getIndex()} with name ${clients[index].getName()}");
-    setState(() {
-      clients.removeAt(index);
-    });
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,96 +38,62 @@ class _ClientsViewState extends State<ClientsView> {
       appBar: appBarApp(context),
       body: Column(
         children: [
-          PaginatedDataTable(
-            header: const Center(child: Text('My Clients')),
-            source: _data,
-            columns: [
-              DataColumn(label: Text("ID")),
-              DataColumn(label: Text("CLient")),
-              DataColumn(label: Text("Age"))
-            ],
-            columnSpacing: 50,
-            horizontalMargin: 25,
-            rowsPerPage: 8,
-          )
+          Center(
+            child: Text('My Clients', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: listClients.length,
+              itemBuilder: (context, index) {
+                final clientData = listClients[index].keys.first;
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: ListTile(
+                    title: Text("ID: ${clientData.index}"),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Client: ${clientData.getName()}"),
+                        Text("Age: ${clientData.age}"),
+                      ],
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditClientScreen(client: clientData),
+                              ),
+                            );
+                            if (result == true) {
+                              setState(() {});
+                            }
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            setState(() {
+                              listClients.removeWhere((element) => element.keys.first == clientData);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: bottomNavigationApp(),
     );
-  }
-}
-
-class MyData extends DataTableSource{
-  final BuildContext context;
-  final Function(Clients) onClientDeleted;
-
-  MyData(this.context, this.onClientDeleted);
-
-  @override
-  DataRow? getRow(int index) {
-    final clientData = listClients[index].keys.first;
-    final data = listClients[index][clientData];
-    bool selected = false;
-
-    return DataRow.byIndex(
-      index: index,
-        selected: selected,
-        onSelectChanged: (isSelected){
-          if(isSelected != null && isSelected){
-            showEditDeleteMenu(clientData);
-          }
-        },
-        cells: [
-          DataCell(Text(clientData.index.toString())),
-          DataCell(Text(clientData.getName())),
-          DataCell(Text(clientData.age.toString())),
-    ]);
-  }
-
-  @override
-  // TODO: implement isRowCountApproximate
-  bool get isRowCountApproximate => false;
-
-  @override
-  // TODO: implement rowCount
-  int get rowCount => listClients.length;
-
-  @override
-  // TODO: implement selectedRowCount
-  int get selectedRowCount => 0;
-
-  void showEditDeleteMenu(Clients client) {
-    showDialog(
-        context: context,
-        builder: (context){
-          return AlertDialog(
-            title: Text("Options of Client"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                  title: Text("Edit"),
-                  onTap: () {
-                    Navigator.pop(context); // Cerrar el diálogo
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditClientScreen(client: client),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  title: Text("Eliminar"),
-                  onTap: () {
-                    Navigator.pop(context);
-                    onClientDeleted(client);
-                  },
-                ),
-              ],
-            ),
-          );
-        });
   }
 }
 
@@ -187,8 +135,14 @@ class _EditClientScreenState extends State<EditClientScreen> {
             onPressed: () {
               String newName = nameController.text;
               int newAge = int.tryParse(ageController.text) ?? 0;
-              widget.client.editClient(newName, newAge);
-              Navigator.pop(context);
+              final clientIndex = listClients.indexWhere((element) => element.keys.first == widget.client);
+              if (clientIndex != -1) {
+                listClients[clientIndex][widget.client] = "Updated data";
+                widget.client.editClient(newName, newAge);
+              }
+
+
+              Navigator.pop(context, true);
             },
             child: Text('Guardar'),
           ),
