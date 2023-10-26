@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
-import 'package:renstatefrontend/properties-searching/ui/see_post.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/see_post.dart';
 import 'package:renstatefrontend/ui-initial-section/init_view.dart';
 import 'package:renstatefrontend/ui-mesagge/receivedMessages.dart';
 import 'package:renstatefrontend/ui-profile/profile_view.dart';
