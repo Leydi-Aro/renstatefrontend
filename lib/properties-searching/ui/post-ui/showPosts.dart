@@ -30,6 +30,7 @@ class _ShowPostsState extends State<ShowPosts> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: appBarApp(context),
       body: FutureBuilder(
           future: _posts,
           builder: (context, snapshot){
