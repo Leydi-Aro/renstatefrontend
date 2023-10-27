@@ -8,7 +8,7 @@ Widget buttonApp(String text, Function onPressed){
         onPressed();
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.white70),
+        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFE7EFF6)),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
           EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         ),
