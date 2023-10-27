@@ -5,6 +5,7 @@ import 'package:renstatefrontend/ui-initial-section/init_view.dart';
 import 'package:renstatefrontend/ui-mesagge/receivedMessages.dart';
 import 'package:renstatefrontend/ui-profile/profile_view.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
+import 'package:renstatefrontend/ui-posts/posts.dart';
 import '../ui-initial-section/login_view.dart';
 import '../ui-initial-section/register_view.dart';
 import 'package:renstatefrontend/see-your-clients/ui/see_clients.dart';
@@ -18,5 +19,6 @@ var customRoutes = <String, WidgetBuilder>{
   ReceivedMessages.id: (_) => const ReceivedMessages(),
   SearchPage.id: (_) => const SearchPage(),
   SeePost.id: (_) => const SeePost(),
+  PostsList.id: (_) => const PostsList(),
   ClientsView.id: (_) => const ClientsView(),
 };
