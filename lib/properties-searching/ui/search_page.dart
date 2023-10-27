@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:renstatefrontend/properties-searching/ui/all_results.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/showPosts.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
 import '../../shared/appBarApp.dart';
@@ -38,27 +38,35 @@ class SearchPage extends StatelessWidget {
 
                     filterButton(
                         context,
-                        "Department",
+                        "Departments",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context)=>ShowPosts('department'))
+                          );
                         }),
                     filterButton(
                         context,
-                        "Home",
+                        "Houses",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>ShowPosts('house'))
+                              );
                         }),
                     filterButton(
                         context,
                         "Commercial Space",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>ShowPosts('commercialSpace'))
+                              );
                         }),
                     filterButton(
                         context,
-                        "Room",
+                        "Rooms",
                             (){
-                          Navigator.pushNamed(context, AllResults.id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>ShowPosts('room'))
+                              );
                         }),
                   ],
                 ),
