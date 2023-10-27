@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
-import 'package:renstatefrontend/see-your-clients/ui/see_clients.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
@@ -62,17 +61,20 @@ class ProfileView extends StatelessWidget {
                           }
                       ),
                       buttonApp(
-                          "Message",
+                          "Search",
                               (){
-                            Navigator.pushNamed(context, MessagesView.id);
+                            Navigator.pushNamed(context, SearchPage.id);
                           }
                       )
                     ],
-
                   ),
-                  buttonApp("Your Clients", (){
-                    Navigator.pushNamed(context, ClientsView.id);
-                  })
+                  SizedBox(height: 15.0,),
+                  buttonApp(
+                      "Message",
+                          (){
+                        Navigator.pushNamed(context, MessagesView.id);
+                      }
+                  ),
                 ],
               ),
             ),
