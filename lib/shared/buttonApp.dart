@@ -2,9 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget buttonApp(String text, Function onPressed) {
+Widget buttonApp(String text, Function onPressed){
   return TextButton(
-    onPressed: () {
+    onPressed: (){
       onPressed();
     },
     style: ButtonStyle(
