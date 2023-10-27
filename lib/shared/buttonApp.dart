@@ -21,5 +21,5 @@ Widget buttonApp(String text, Function onPressed){
           color: Colors.black,
         ),
       ),
-    );
- }
+  );
+}
