@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
+import 'package:renstatefrontend/see-your-clients/ui/see_clients.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
-import 'package:renstatefrontend/ui-mesagge/receivedMessages.dart';
 
 import '../shared/showImageProfile.dart';
 
@@ -56,14 +55,28 @@ class ProfileView extends StatelessWidget {
                   cardInfo(context, "rafael@gmail.com"),
                   cardInfo(context, "Here is description about of user"),
                   SizedBox(height: 20.0,),
-
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       buttonApp(
                           "Save",
                               (){
 
                           }
                       ),
+                      buttonApp(
+                          "Message",
+                              (){
+                        }
+                      )
+                    ],
+                  ),
                   SizedBox(height: 15.0,),
+                  buttonApp(
+                      "Your Clients",
+                      (){
+                        Navigator.pushNamed(context, ClientsView.id);
+                      })
                 ],
               ),
             ),

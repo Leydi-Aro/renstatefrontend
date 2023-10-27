@@ -8,6 +8,7 @@ import 'package:renstatefrontend/ui-profile/profile_view.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
 import '../ui-initial-section/login_view.dart';
 import '../ui-initial-section/register_view.dart';
+import 'package:renstatefrontend/see-your-clients/ui/see_clients.dart';
 
 var customRoutes = <String, WidgetBuilder>{
   LoginView.id: (_) => const LoginView(),
@@ -19,4 +20,5 @@ var customRoutes = <String, WidgetBuilder>{
   AllResults.id: (_) => const AllResults(),
   SearchPage.id: (_) => const SearchPage(),
   SeePost.id: (_) => const SeePost(),
+  ClientsView.id: (_) => const ClientsView(),
 };

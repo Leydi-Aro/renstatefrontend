@@ -91,7 +91,7 @@ class _ClientsViewState extends State<ClientsView> {
           ),
         ],
       ),
-      bottomNavigationBar: bottomNavigationApp(),
+      bottomNavigationBar: bottomNavigationApp(context),
     );
   }
 }
