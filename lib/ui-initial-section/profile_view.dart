@@ -65,7 +65,7 @@ class ProfileView extends StatelessWidget {
                               (){
                             Navigator.pushNamed(context, SearchPage.id);
                           }
-                      )
+                      ),
                     ],
                   ),
                   SizedBox(height: 15.0,),
