@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:renstatefrontend/properties-searching/ui/makePost.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/MakePost.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/ui-mesagge/receivedMessages.dart';
 import 'package:renstatefrontend/ui-profile/profile_view.dart';

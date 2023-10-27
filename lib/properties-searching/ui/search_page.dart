@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:renstatefrontend/properties-searching/ui/post-ui/showPosts.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/ShowPosts.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
 import '../../shared/appBarApp.dart';

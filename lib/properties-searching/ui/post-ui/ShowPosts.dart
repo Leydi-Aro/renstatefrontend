@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:renstatefrontend/properties-searching/ui/post-ui/see_post.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/SeePost.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
-import '../../../models/post.dart';
+import '../../../models/Post.dart';
 import '../../../shared/services/PostService.dart';
 
 
@@ -32,9 +32,12 @@ class _ShowPostsState extends State<ShowPosts> {
   void initState() {
     super.initState();
     _posts = postService.getPosts();
-    _posts = _posts.then((posts) {
-      return posts.where((post) => post.category == category).toList();
-    });
+
+    if(category != '') {
+      _posts = _posts.then((posts) {
+        return posts.where((post) => post.category == category).toList();
+      });
+    }
   }
 
 
@@ -123,7 +126,7 @@ Widget viewPost(BuildContext context, Post post) {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 30.0,),
-              buttonDetails(context)
+              buttonDetails(context, post.id)
             ],
           ),
       ),
@@ -208,7 +211,7 @@ Widget categoryResult(String category) {
   );
 }
 
-Widget buttonDetails(context) {
+Widget buttonDetails(context, int postId) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.blue,
@@ -227,7 +230,7 @@ Widget buttonDetails(context) {
       ),
       onPressed: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context)=>SeePost())
+            MaterialPageRoute(builder: (context)=>SeePost(postId))
         );
       },
     ),

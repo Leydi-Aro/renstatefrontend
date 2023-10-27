@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../entities/models/Clients.dart';
+import '../../models/Clients.dart';
 import '../../shared/appBarApp.dart';
 import '../../shared/bottomNavigationApp.dart';
 

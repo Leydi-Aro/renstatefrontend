@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/YourPosts.dart';
 import 'package:renstatefrontend/see-your-clients/ui/see_clients.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
@@ -24,11 +25,11 @@ class ProfileView extends StatelessWidget {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 5.0),
                   child: showImageProfile(),
                 ),
                 Text(
-                  'Rafael LopezZ Perez',
+                  'Rafael Lopez Perez',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -38,46 +39,58 @@ class ProfileView extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(40.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+              padding: EdgeInsets.symmetric(vertical: 15.0),
+              child: FractionallySizedBox(
+                widthFactor: 0.9,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
 
-                  cardInfo(context, "Rafael"),
-                  cardInfo(context, "Lopez Perez"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:[
-                      cardInfo(context, "33"),
-                      cardInfo(context, "Male"),
-                    ]
-                  ),
-                  cardInfo(context, "rafael@gmail.com"),
-                  cardInfo(context, "Here is description about of user"),
-                  SizedBox(height: 20.0,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buttonApp(
+                    cardInfo(context, "Rafael"),
+                    cardInfo(context, "Lopez Perez"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children:[
+                        cardInfo(context, "33"),
+                        cardInfo(context, "Male"),
+                      ]
+                    ),
+                    cardInfo(context, "rafael@gmail.com"),
+                    cardInfo(context, "Here is description about of user"),
+                    SizedBox(height: 20.0,),
+                    FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: buttonApp(
                           "Save",
                               (){
 
                           }
                       ),
-                      buttonApp(
-                          "Message",
+                    ),
+                    SizedBox(height: 5,),
+                    FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: buttonApp(
+                          "Your Clients",
+                          (){
+                            Navigator.push(
+                              context,
+                            MaterialPageRoute(builder: (context)=>ClientsView()));
+                          }),
+                    ),
+                    SizedBox(height: 5,),
+                    FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: buttonApp(
+                          "Your Posts",
                               (){
-                        }
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 15.0,),
-                  buttonApp(
-                      "Your Clients",
-                      (){
-                        Navigator.pushNamed(context, ClientsView.id);
-                      })
-                ],
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context)=>YourPosts()));
+                          }),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -96,7 +109,7 @@ Widget cardInfo(context, String info){
     child: Padding(
       padding: EdgeInsets.symmetric(
         horizontal: size.width * 0.1,
-        vertical: size.height * 0.02,
+        vertical: 15,
       ),
       child:
       Center(

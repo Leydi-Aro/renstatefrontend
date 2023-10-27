@@ -1,34 +1,73 @@
 
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/models/Post.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
-import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/ui-profile/profile_author.dart';
 
+import '../../../shared/services/PostService.dart';
+
 class SeePost extends StatefulWidget {
-  const SeePost({super.key});
   static String id = 'see_post';
 
+  final int postId;
+  SeePost(this.postId);
+
   @override
-  State<SeePost> createState() => _SeePostState();
+  State<SeePost> createState() => _SeePostState(postId);
 }
 
 class _SeePostState extends State<SeePost> {
+  final int postId;
+  _SeePostState(this.postId);
+
+  late Future<Post> _postApi;
+  late Post post;
+
+  final _postService = PostService();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _postApi = _postService.getPostById(postId);
+    _postApi.then((value) => {
+      post = value,
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarApp(context),
-      body: Center(
-        child: ListView(
-          children: [
-            showImage(),
-            seeProfileText(),
-            buttonReserve(),
-            infoPost(),
-          ],
-        )
+      body: FutureBuilder(
+        future: _postApi,
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }else if(snapshot.hasError){
+            print(snapshot.error);
+            return Text("Error");
+          }else if(!snapshot.hasData){
+            return Text("No data available");
+          }else{
+            return Center(
+              child: ListView(
+                children: [
+                  showImage(),
+                  seeProfileText(),
+                  buttonReserve(),
+                  infoPost(),
+                ],
+              ),
+            );
+          }
+        },
       ),
       bottomNavigationBar: bottomNavigationApp(context),
     );
@@ -43,7 +82,7 @@ class _SeePostState extends State<SeePost> {
           padding: const EdgeInsets.only(top:20.0),
           child: Image(
             image: NetworkImage(
-              'https://images.pexels.com/photos/2079246/pexels-photo-2079246.jpeg?auto=compress&cs=tinysrgb&w=600',
+              post.imgUrl
             ),
           ),
         ),
@@ -116,11 +155,14 @@ class _SeePostState extends State<SeePost> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                showInfo("Tittle: ", "fermentum mauris, vel scelerisque"),
-                showInfo("Description: ", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar mi ut ante euismod tincidunt."),
-                showInfo("Characteristic: ", "Caracteristica uno tetxi de caracteristicas hdgegefjfdfd"),
-                showInfo("Location: ", "Caracteristica uno tetxi de caracteristicas hdgegefjfdfd"),
-                showPrice("457.25")
+                showInfo("Tittle: ", post.title),
+                showInfo("Description: ", post.description),
+                showInfo("Characteristics: ", post.characteristics),
+                showInfo("Location: ", post.location),
+                showInfo("Description: ", post.description),
+                showInfo("Characteristic: ", post.characteristics),
+                showInfo("Location: ", post.location),
+                showPrice(post.price.toString())
 
               ],
             ),

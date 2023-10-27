@@ -1,6 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:renstatefrontend/models/PostRequest.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/ShowPosts.dart';
+import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../models/Post.dart';
 
 class MakePost extends StatefulWidget {
   const MakePost({Key? key}) : super(key: key);
@@ -10,12 +19,13 @@ class MakePost extends StatefulWidget {
 }
 
 class _MakePostState extends State<MakePost> {
-  String selectedCategory = 'Room';
+  String selectedCategory = 'room';
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController characteristicsController = TextEditingController();
   TextEditingController imageUrlController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +35,17 @@ class _MakePostState extends State<MakePost> {
         child: ListView(
           children: [
             showTittle(),
-            formBox('Title', titleController),
-            formBox('Description', descriptionController),
-            formBox('Characteristics', characteristicsController),
-            formBox('Image URL', imageUrlController),
+            formBox('Title', titleController, false),
+            formBox('Description', descriptionController, false),
+            formBox('Characteristics', characteristicsController,false),
+            formBox('Location', locationController,false ),
+            formBox('Image URL', imageUrlController, false),
             selectCategory(),
-            formBox('Price', priceController),
-            SizedBox(height: 20.0,),
-            buttonSubmit(),
+            formBox('Price', priceController, true),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25.0),
+              child: buttonSubmit(),
+            ),
           ],
         ),
       ),
@@ -40,7 +53,9 @@ class _MakePostState extends State<MakePost> {
     );
   }
 
-  Widget formBox(String labelText, TextEditingController controller) {
+  //type = 0 : text
+  //type = 1 : only number
+  Widget formBox(String labelText, TextEditingController controller, bool isNumber) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: FractionallySizedBox(
@@ -48,6 +63,8 @@ class _MakePostState extends State<MakePost> {
         child: Column(
           children: [
             TextFormField(
+              maxLines: null,
+              inputFormatters: isNumber ? [FilteringTextInputFormatter.digitsOnly] : null,
               controller: controller,
               decoration: InputDecoration(
                 labelText: labelText,
@@ -69,6 +86,7 @@ class _MakePostState extends State<MakePost> {
     );
   }
 
+
   Widget selectCategory() {
     return FractionallySizedBox(
       widthFactor: 0.7,
@@ -85,7 +103,7 @@ class _MakePostState extends State<MakePost> {
             ),
             child: DropdownButton<String>(
               value: selectedCategory,
-              items: ['Room', 'Commercial Space', 'Home', 'Department']
+              items: ['room', 'commercialSpace', 'home', 'department']
                   .map((category) {
                 return DropdownMenuItem<String>(
                   value: category,
@@ -108,18 +126,13 @@ class _MakePostState extends State<MakePost> {
 
   Widget buttonSubmit(){
     return FractionallySizedBox(
-      widthFactor: 0.5,
+      widthFactor: 0.55,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF064789)),
         ),
         onPressed: () {
-          print("Title: ${titleController.text}");
-          print("Description: ${descriptionController.text}");
-          print("Characteristics: ${characteristicsController.text}");
-          print("Image URL: ${imageUrlController.text}");
-          print("Price: ${priceController.text}");
-          print("Category: $selectedCategory");
+          createPost();
         },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -131,6 +144,40 @@ class _MakePostState extends State<MakePost> {
         ),
       ),
     );
+  }
+
+  Future<void> createPost() async {
+
+    final String apiUrl = 'https://roomrest.azurewebsites.net/api/posts';
+
+    final PostRequest newPost = PostRequest(
+      title: titleController.text,
+      description: descriptionController.text,
+      characteristics: characteristicsController.text,
+      location: locationController.text,
+      price: double.parse(priceController.text),
+      imgUrl: imageUrlController.text,
+      category: selectedCategory,
+      author_id: 1,
+    );
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(newPost.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print('Post created successfully');
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context)=>SearchPage())
+      );
+    } else {
+      print('Error creating post: ${response.statusCode}');
+    }
   }
 
 }
@@ -149,3 +196,7 @@ Widget showTittle(){
     ),
   );
 }
+
+
+
+

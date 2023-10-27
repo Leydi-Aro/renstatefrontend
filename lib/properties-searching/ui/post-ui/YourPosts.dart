@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
-class PostsList extends StatefulWidget {
-  const PostsList({super.key});
+class YourPosts extends StatefulWidget {
+  const YourPosts({super.key});
   static String id = 'posts_list';
 
   @override
-  State<PostsList> createState() => _PostsListState();
+  State<YourPosts> createState() => _YourPostsState();
 }
 
-class _PostsListState extends State<PostsList> {
+class _YourPostsState extends State<YourPosts> {
   @override
   Widget build(BuildContext context){
     return Scaffold(

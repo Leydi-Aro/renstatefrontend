@@ -8,7 +8,7 @@ class Post {
   final double price;
   final String imgUrl;
   final String category;
-  final int authorId;
+  final int author_id;
 
   Post({
     required this.id,
@@ -19,20 +19,21 @@ class Post {
     required this.price,
     required this.imgUrl,
     required this.category,
-    required this.authorId,
+    required this.author_id,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      id: json['id'],
+      id: json['id'] as int? ?? 0, //
       title: json['title'],
       description: json['description'],
       characteristics: json['characteristics'],
       location: json['location'],
-      price: json['price'].toDouble(),
+      price: json['price']?.toDouble() ?? 0.0,
       imgUrl: json['imgUrl'],
       category: json['category'],
-      authorId: json['author_id'],
+      author_id: json['author_id'],
     );
   }
+
 }
