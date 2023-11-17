@@ -3,14 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:renstatefrontend/models/PostRequest.dart';
-import 'package:renstatefrontend/properties-searching/ui/post-ui/ShowPosts.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../models/Post.dart';
 
 class MakePost extends StatefulWidget {
   const MakePost({Key? key}) : super(key: key);
@@ -40,7 +39,9 @@ class _MakePostState extends State<MakePost> {
             formBox('Description', descriptionController, false),
             formBox('Characteristics', characteristicsController,false),
             formBox('Location', locationController,false ),
+
             formBox('Image URL', imageUrlController, false),
+            ElevatedButton(onPressed: _pickImage, child: Text("Pick Image from Gallery")),
             selectCategory(),
             formBox('Price', priceController, true),
             Padding(
@@ -146,6 +147,19 @@ class _MakePostState extends State<MakePost> {
       ),
     );
   }
+
+
+  // Nuevo método para seleccionar o tomar una foto
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        imageUrlController.text = pickedFile.path;
+      });
+    }
+  }
+
 
   Future<void> createPost() async {
 
