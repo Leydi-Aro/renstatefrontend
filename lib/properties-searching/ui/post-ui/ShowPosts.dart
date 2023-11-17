@@ -26,29 +26,88 @@ class _ShowPostsState extends State<ShowPosts> {
 
   final postService = PostService();
   late Future<List<Post>> _posts;
+  late List<Post> postsList;
+  late List<Post> filterPosts;
+  TextEditingController _searchController = TextEditingController();
 
 
   @override
   void initState() {
+
+    postsList = [];
+
     super.initState();
     _posts = postService.getPosts();
 
     if(category != '') {
       _posts = _posts.then((posts) {
-        return posts.where((post) => post.category == category).toList();
+        postsList = posts.where((post) => post.category == category).toList();
+
+        filterPosts = postsList;
+        _searchController.addListener(searchDesign);
+
+        return postsList;
       });
     }
+
+
+  }
+  Widget searchDesign() {
+
+
+    return FractionallySizedBox(
+      widthFactor: 0.9,
+      child: Column(
+        children: [
+          Text(
+            'Search',
+            style: TextStyle(
+              color: Color(0xFF064789),
+              fontSize: 36,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          TextField(
+            controller: _searchController,
+            style: TextStyle(fontFamily: 'Inter'),
+            maxLines: 1,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              suffixIcon: Icon(Icons.search),
+            ),
+            onChanged: (search){
+              setState(() {
+
+              });
+            },
+          ),
+
+
+
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBarApp(context),
       body: FutureBuilder(
+
           future: _posts,
           builder: (context, snapshot){
+
+
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
@@ -56,11 +115,23 @@ class _ShowPostsState extends State<ShowPosts> {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(child: Text('No posts available.'));
             }else{
-              return
-                Center(
-                child: ListView(
-                  children: _listPosts(snapshot.data!),
-                ),
+
+              filterPosts = searching(snapshot.data!);
+              return Column(
+                children: [
+                  categoryResult(category),
+                  searchDesign(),
+                  Expanded(
+                      child: ListView.builder(
+                        itemCount: filterPosts.length,
+                          itemBuilder: (context, index){
+                          return Padding(padding: const EdgeInsets.symmetric(vertical: 15.0),
+                          child: viewPost(context, filterPosts[index]),
+                          );
+                          },
+                      ),
+                  ),
+                ],
               );
             }
           },
@@ -69,9 +140,22 @@ class _ShowPostsState extends State<ShowPosts> {
     );
   }
 
+
+  List<Post> searching(List<Post> posts) {
+    String searchTerm = _searchController.text.toLowerCase();
+    print(searchTerm);
+    filterPosts = postsList.where((post){
+      return
+        post.description.toLowerCase().contains(searchTerm) ||
+      post.title.toLowerCase().contains(searchTerm) ||
+      post.characteristics.toLowerCase().contains(searchTerm) ||
+      post.location.toLowerCase().contains(searchTerm);
+    }).toList();
+    return filterPosts;
+  }
+
   List<Widget> _listPosts(List<Post>data){
     List<Widget> posts = [];
-
     posts.add(categoryResult(data[0].category));
     posts.add(searchDesign());
     for (var post in data){
@@ -136,6 +220,7 @@ Widget viewPost(BuildContext context, Post post) {
 
 
 Widget titleCard(Post post){
+
   return Row(
     children: [
       Expanded(
@@ -168,31 +253,7 @@ Widget titleCard(Post post){
   );
 }
 
-Widget searchDesign() {
-  return FractionallySizedBox(
-    widthFactor: 0.9,
-    child: Column(
-      children: [
-        Text(
-          'Search',
-          style: TextStyle(
-            color: Color(0xFF064789),
-            fontSize: 36,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        TextField(
-          style: TextStyle(fontFamily: 'Inter'),
-          maxLines: 1,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            suffixIcon: Icon(Icons.search),
-          ),
-        ),
-      ],
-    ),
-  );
-}
+
 
 Widget categoryResult(String category) {
   return Padding(
