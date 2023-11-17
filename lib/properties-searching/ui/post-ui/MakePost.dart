@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:renstatefrontend/models/PostRequest.dart';
 import 'package:renstatefrontend/properties-searching/ui/post-ui/ShowPosts.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
@@ -171,12 +172,16 @@ class _MakePostState extends State<MakePost> {
 
     if (response.statusCode == 200) {
       print('Post created successfully');
+      Fluttertoast.showToast(msg: 'Post created successfully',
+      toastLength: Toast.LENGTH_SHORT);
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context)=>SearchPage())
       );
     } else {
       print('Error creating post: ${response.statusCode}');
+      Fluttertoast.showToast(msg: 'Error creating post',
+          toastLength: Toast.LENGTH_SHORT);
     }
   }
 

@@ -121,7 +121,7 @@ class _SeePostState extends State<SeePost> {
 
   Widget buttonReserve() {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(5.0),
       child: FractionallySizedBox(
         widthFactor: 0.8,
         child: TextButton(
@@ -158,9 +158,6 @@ class _SeePostState extends State<SeePost> {
                 showInfo("Tittle: ", post.title),
                 showInfo("Description: ", post.description),
                 showInfo("Characteristics: ", post.characteristics),
-                showInfo("Location: ", post.location),
-                showInfo("Description: ", post.description),
-                showInfo("Characteristic: ", post.characteristics),
                 showInfo("Location: ", post.location),
                 showPrice(post.price.toString())
 
