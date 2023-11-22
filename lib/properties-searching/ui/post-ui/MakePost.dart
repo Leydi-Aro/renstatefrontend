@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +27,7 @@ class _MakePostState extends State<MakePost> {
   TextEditingController imageUrlController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController locationController = TextEditingController();
+  File? _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,29 @@ class _MakePostState extends State<MakePost> {
             formBox('Description', descriptionController, false),
             formBox('Characteristics', characteristicsController,false),
             formBox('Location', locationController,false ),
-
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: ElevatedButton(
+                onPressed: (){_pickImage(ImageSource.gallery);},
+                  child: Text("Gallery"),
+              ),
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: ElevatedButton(
+                onPressed: (){_pickImage(ImageSource.camera);},
+                child: Text("Camera"),
+              ),
+            ),
+            if (_imageFile != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 200,
+                    child: Image.file(_imageFile!, fit: BoxFit.contain)
+                ),
+              ),
             formBox('Image URL', imageUrlController, false),
-            ElevatedButton(onPressed: _pickImage, child: Text("Pick Image from Gallery")),
             selectCategory(),
             formBox('Price', priceController, true),
             Padding(
@@ -150,12 +172,14 @@ class _MakePostState extends State<MakePost> {
 
 
   // Nuevo método para seleccionar o tomar una foto
-  Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+  Future<void> _pickImage(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().getImage(source: imageSource);
 
     if (pickedFile != null) {
       setState(() {
         imageUrlController.text = pickedFile.path;
+        _imageFile = File(pickedFile.path);
+        imageUrlController.selection = TextSelection.fromPosition(TextPosition(offset: imageUrlController.text.length));
       });
     }
   }
@@ -188,6 +212,7 @@ class _MakePostState extends State<MakePost> {
       print('Post created successfully');
       Fluttertoast.showToast(msg: 'Post created successfully',
       toastLength: Toast.LENGTH_SHORT);
+      print(newPost.toString());
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context)=>SearchPage())
