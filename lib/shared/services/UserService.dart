@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
-  final String baseUrl= "http://192.168.18.15:8080/api/users";
+  final String baseUrl= "http://192.168.135.66:8080/api/users";
 
   Future<int?> registerUser(String name, String lastName, String email, String password) async {
     try {

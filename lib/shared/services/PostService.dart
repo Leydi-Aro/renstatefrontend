@@ -16,33 +16,72 @@ class PostService {
   late MediaService mediaService = MediaService();
   final String apiUrl;
 
-  PostService():this.apiUrl='http://192.168.18.15:8080/api/posts';
+  PostService():this.apiUrl='http://192.168.135.66:8080/api/posts';
   //PostService():this.apiUrl='https://roomrest.azurewebsites.net/api/posts';
 
 
-  createPost(PostRequest postRequest, List<File> _images) async {
+  Future<void> createPost(PostRequest postRequest, List<File> _images) async {
+    try {
+      final userId = await userService.getUserLogedId();
+      postRequest.author_id = userId as int;
 
-    final userId = await userService.getUserLogedId();
-    postRequest.author_id =  userId as int;
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(postRequest.toJson()),
+      );
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(postRequest.toJson()),
-    );
+      if (response.statusCode == 201) {
+        Fluttertoast.showToast(
+          msg: 'Post created successfully',
+          toastLength: Toast.LENGTH_SHORT,
+        );
 
-    if (response.statusCode == 201) {
-      Fluttertoast.showToast(msg: 'Post created successfully',
-          toastLength: Toast.LENGTH_SHORT);
-      print(postRequest.toString());
+        print("==============================");
+        print("http://192.168.135.66:8080/api/media/post/" + jsonDecode(response.body)['id'].toString() + "/upload");
+        print(response.body);
+        String apiUrlMedia = "http://192.168.135.66:8080/api/media/post/" + jsonDecode(response.body)['id'].toString() + "/upload";
 
-    } else {
-      print('Error creating post: ${response.statusCode}');
-      Fluttertoast.showToast(msg: 'Error creating post',
-          toastLength: Toast.LENGTH_SHORT);
 
+        try {
+          var request = http.MultipartRequest('POST', Uri.parse(apiUrlMedia));
+
+          for (var image in _images) {
+            request.files.add(
+              http.MultipartFile(
+                'files',
+                image.readAsBytes().asStream(),
+                image.lengthSync(),
+                filename: image.path.split("/").last,
+              ),
+            );
+          }
+
+          var response = await request.send();
+          if (response.statusCode == 200) {
+            print("Images uploaded successfully");
+          } else {
+            print("Error uploading images. Status code: ${response.statusCode}");
+          }
+        } catch (e) {
+          print("Error uploading images: $e");
+        }
+
+      } else {
+        print('Error creating post: ${response.statusCode}');
+        Fluttertoast.showToast(
+          msg: 'Error creating post',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } catch (e) {
+      print('Error creating post: $e');
+      Fluttertoast.showToast(
+        msg: 'Error creating post',
+        toastLength: Toast.LENGTH_SHORT,
+      );
     }
   }
 

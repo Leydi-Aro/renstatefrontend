@@ -1,21 +1,20 @@
 
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
-
 
 
 
 
 class MediaService {
 
-  final String apiUrl;
+  String apiUrl;
 
-  MediaService() :this.apiUrl='http://192.168.18.15:8080/api/media/post';
+  MediaService() :this.apiUrl='http://192.168.135.66:8080/api/media/post';
 
 
   Future<void> _uploadImages(int postId, List<File> _images) async {
 
+    this.apiUrl = "http://192.168.135.66:8080/api/media/post/"+postId.toString()+"/upload";
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
@@ -41,4 +40,5 @@ class MediaService {
       print("Error uploading images: $e");
     }
   }
+
 }
