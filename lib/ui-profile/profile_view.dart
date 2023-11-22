@@ -93,7 +93,7 @@ class ProfileView extends StatelessWidget {
                               (){
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context)=>YourPosts()));
+                                MaterialPageRoute(builder: (context)=>YourPosts(3)));
                           }),
                     ),
                   ],
