@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:renstatefrontend/models/PostRequest.dart';
-import 'package:renstatefrontend/properties-searching/ui/post-ui/ShowPosts.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../models/Post.dart';
 
 class MakePost extends StatefulWidget {
   const MakePost({Key? key}) : super(key: key);

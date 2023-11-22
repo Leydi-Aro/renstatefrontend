@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/shared/logo.dart';
+import 'package:renstatefrontend/shared/services/UserService.dart';
 import 'package:renstatefrontend/ui-initial-section/register_view.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
-  static String id = 'login_view';
+
+  late UserService userService = UserService();
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +43,8 @@ class LoginView extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          emailInput(),
-                          passwordInput(),
+                          emailInput(emailController),
+                          passwordInput(passwordController),
                         ],
                       ),
                     ),
@@ -46,7 +53,10 @@ class LoginView extends StatelessWidget {
                   buttonApp(
                     "Log In",
                       (){
-                        Navigator.pushNamed(context, WelcomeView.id);
+                      print(emailController.text);
+                      print(passwordController.text);
+                      _performLogin(emailController.text, passwordController.text, context);
+
                       }
                   )
                 ],
@@ -56,6 +66,30 @@ class LoginView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+
+  void _performLogin(String email, String password, BuildContext context) async {
+    final int? userId = await userService.loginUser(email, password);
+
+    if (userId != null) {
+      Future<void> saveUserId(int userId) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setInt('user_id', userId);
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WelcomeView()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Credenciales incorrectas'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
   }
 }
 
@@ -103,10 +137,11 @@ Widget textLogin(){
     );
 }
 
-Widget emailInput(){
+Widget emailInput(TextEditingController controller){
   return Container(
     child: TextField(
       keyboardType: TextInputType.emailAddress,
+      controller: controller,
       decoration: InputDecoration(
         labelText: 'Email',
         labelStyle: TextStyle(
@@ -118,9 +153,10 @@ Widget emailInput(){
     ),
   );
 }
-Widget passwordInput(){
+Widget passwordInput(TextEditingController controller){
   return Container(
     child: TextField(
+      controller: controller,
       keyboardType: TextInputType.emailAddress,
       obscureText: true,
       decoration: InputDecoration(

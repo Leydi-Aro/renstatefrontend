@@ -38,7 +38,7 @@ class RegisterView extends StatelessWidget {
                     buttonApp(
                         "Register",
                         (){
-                          Navigator.pushNamed(context, LoginView.id);
+                          //Navigator.pushNamed(context, LoginView.id);
                         }
                         )
                   ],

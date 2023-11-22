@@ -37,14 +37,17 @@ class InitView extends StatelessWidget {
                   buildStyledButton(
                       "Login",
                       (){
-                        Navigator.pushNamed(context, LoginView.id);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context)=>LoginView())
+                        );
                       }
                   ),
                   buildStyledButton(
                     "Register",
                     () {
-                      // Navigate to the register view
-                      Navigator.pushNamed(context, RegisterView.id);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>RegisterView())
+                      );
                     },
                   )
                 ],
