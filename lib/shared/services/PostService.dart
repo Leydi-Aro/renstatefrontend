@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 class PostService {
   final String apiUrl;
 
-  PostService():this.apiUrl='https://roomrest.azurewebsites.net/api/posts';
+  PostService():this.apiUrl='http://localhost:8080/api/posts';
+  //PostService():this.apiUrl='https://roomrest.azurewebsites.net/api/posts';
 
   Future<List<Post>> getPosts() async {
     final response = await http.get(Uri.parse(apiUrl));

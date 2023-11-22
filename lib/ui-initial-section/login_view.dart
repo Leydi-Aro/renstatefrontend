@@ -1,18 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/shared/logo.dart';
+import 'package:renstatefrontend/shared/services/UserService.dart';
 import 'package:renstatefrontend/ui-initial-section/register_view.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
 
-class LoginView extends StatelessWidget {
-  LoginView({super.key});
-  static String id = 'login_view';
-  TextEditingController txtEmail = TextEditingController();
-  TextEditingController txtPassword = TextEditingController();
+class LoginView extends StatefulWidget {
+  @override
+  _LoginViewState createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+
+  late UserService userService = UserService();
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
 
   @override
+  void initState() {
+    super.initState();
+    if (userService.getUserLogedId() == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginView()),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -39,8 +58,8 @@ class LoginView extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          emailInput(),
-                          passwordInput(),
+                          emailInput(emailController),
+                          passwordInput(passwordController),
                         ],
                       ),
                     ),
@@ -49,9 +68,10 @@ class LoginView extends StatelessWidget {
                   buttonApp(
                     "Log In",
                       (){
+                      print(emailController.text);
+                      print(passwordController.text);
+                      _performLogin(emailController.text, passwordController.text, context);
 
-
-                        Navigator.pushNamed(context, WelcomeView.id);
                       }
                   )
                 ],
@@ -61,6 +81,27 @@ class LoginView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+
+  void _performLogin(String email, String password, BuildContext context) async {
+    final int? userId = await userService.loginUser(email, password);
+
+    if (userId != null) {
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WelcomeView()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Credenciales incorrectas'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
   }
 }
 
@@ -108,10 +149,11 @@ Widget textLogin(){
     );
 }
 
-Widget emailInput(){
+Widget emailInput(TextEditingController controller){
   return Container(
     child: TextField(
       keyboardType: TextInputType.emailAddress,
+      controller: controller,
       decoration: InputDecoration(
         labelText: 'Email',
         labelStyle: TextStyle(
@@ -123,9 +165,11 @@ Widget emailInput(){
     ),
   );
 }
-Widget passwordInput(){
+Widget passwordInput(TextEditingController controller){
   return Container(
     child: TextField(
+      controller: controller,
+      keyboardType: TextInputType.emailAddress,
       obscureText: true,
       decoration: InputDecoration(
         labelText: 'Password',
