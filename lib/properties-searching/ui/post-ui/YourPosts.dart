@@ -1,103 +1,212 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/properties-searching/ui/post-ui/SeePost.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 
+import '../../../models/Post.dart';
+import '../../../shared/services/PostService.dart';
+
+
 class YourPosts extends StatefulWidget {
-  const YourPosts({super.key});
-  static String id = 'posts_list';
+  final int userId;
+
+  YourPosts(this.userId);
 
   @override
-  State<YourPosts> createState() => _YourPostsState();
+  State<YourPosts> createState() => _YourPostsState(userId);
 }
 
+
 class _YourPostsState extends State<YourPosts> {
+
+  final int userId;
+
+  _YourPostsState(this.userId);
+
+  final postService = PostService();
+  late Future<List<Post>> _posts;
+
+
   @override
-  Widget build(BuildContext context){
+  void initState() {
+    super.initState();
+    _posts = postService.getPosts();
+
+    if(userId != 0) {
+      _posts = _posts.then((posts) {
+        return posts.where((post) => post.author_id == userId).toList();
+      });
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBarApp(context),
-      body: Center(
-        child: ListView(
-          children: [
-            title(),
-            showPosts(),
-            buttonBack(),
-          ],
-        ),
+      body: FutureBuilder(
+        future: _posts,
+        builder: (context, snapshot){
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No posts available.'));
+          }else{
+            return
+              Center(
+                child: ListView(
+                  children: _listPosts(snapshot.data!),
+                ),
+              );
+          }
+        },
       ),
       bottomNavigationBar: bottomNavigationApp(context),
     );
   }
-}
 
-Widget title() {
-  return Center(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0),
-      child: Text(
-        "Your Posts",
-        style: TextStyle(
-          color: Color(0xFF064789),
-          fontWeight: FontWeight.bold,
-          fontSize: 26.0,
-        ),
-      ),
-    ),
-  );
-}
+  List<Widget> _listPosts(List<Post>data){
+    List<Widget> posts = [];
 
-Widget buttonBack(){
-  return FractionallySizedBox(
-    child: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: TextButton(
-        onPressed: () {
-
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF064789)),
-        ),
-        child: Text(
-          "Back",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
+    //posts.add(categoryResult(data[0].category));
+    //posts.add(searchDesign());
+    for (var post in data){
+      posts.add(
+        Center(
+          child: ListView(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                child: viewPost(context, post),
+              ),
+            ],
           ),
         ),
-      ),
-    ),
-  );
+      );
+    }
+    return posts;
+  }
 }
 
-
-Widget showPosts() {
-  final cardColor = Color(0xFF064789);
-  return Card(
-    color: cardColor,
-    margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-    elevation: 5,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(0.0),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Container(
-            color: Colors.white,
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 180.0),
-            child: Text(
-              'Table con filter y paginator, puede editar y eliminar',
+Widget viewPost(BuildContext context, Post post) {
+  return FractionallySizedBox(
+    widthFactor: 0.9,
+    child: Card(
+      color: Color(0xFF064789),
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            titleCard(post),
+            SizedBox(height: 15.0),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: Image(
+                image: NetworkImage(post.imageUrls[0]),
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 15.0),
+            Text(
+              post.description,
+              softWrap: true,
               style: TextStyle(
-                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
               ),
               textAlign: TextAlign.center,
             ),
-          ),
-        ],
+            SizedBox(height: 30.0,),
+            buttonDetails(context, post.id)
+          ],
+        ),
       ),
+    ),
+  );
+}
+
+
+Widget titleCard(Post post){
+  return Row(
+    children: [
+      Expanded(
+        child: Text(
+          post.title,
+          style: TextStyle(
+            fontSize: 23.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Text(
+          'S/ ' + post.price.toString(),
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget categoryResult(String category) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 15.0),
+    child: Text(
+      category.toUpperCase()+'S',
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 25.0,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w900,
+        letterSpacing: 0.52,
+      ),
+      textAlign: TextAlign.center,
+    ),
+  );
+}
+
+Widget buttonDetails(context, int postId) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.blue,
+      borderRadius: BorderRadius.circular(5),
+    ),
+    child: TextButton(
+      child: Text(
+        'Detalles',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.52,
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>SeePost(postId))
+        );
+      },
     ),
   );
 }

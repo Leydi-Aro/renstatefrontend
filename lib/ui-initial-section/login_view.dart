@@ -3,6 +3,7 @@ import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/shared/logo.dart';
 import 'package:renstatefrontend/shared/services/UserService.dart';
 import 'package:renstatefrontend/ui-initial-section/register_view.dart';
+import 'package:renstatefrontend/ui-initial-section/terms_condition.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -65,6 +66,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   notHaveAccount(context),
+                  acceptTerms(context),
                   buttonApp(
                     "Log In",
                       (){
@@ -136,6 +138,42 @@ Widget notHaveAccount(context){
     ),
   );
 }
+
+Widget acceptTerms(context) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "",
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TermsAndConditionsView()),
+            );
+          },
+          child: Text(
+            'Do you accept the terms and conditions?',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF064789),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
 
 
 Widget textLogin(){
