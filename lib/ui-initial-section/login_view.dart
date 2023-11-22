@@ -4,10 +4,13 @@ import 'package:renstatefrontend/shared/logo.dart';
 import 'package:renstatefrontend/shared/services/UserService.dart';
 import 'package:renstatefrontend/ui-initial-section/register_view.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+class LoginView extends StatefulWidget {
+  @override
+  _LoginViewState createState() => _LoginViewState();
+}
 
-class LoginView extends StatelessWidget {
+class _LoginViewState extends State<LoginView> {
 
   late UserService userService = UserService();
 
@@ -16,7 +19,19 @@ class LoginView extends StatelessWidget {
 
 
   @override
+  void initState() {
+    super.initState();
+    if (userService.getUserLogedId() == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginView()),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -74,10 +89,7 @@ class LoginView extends StatelessWidget {
     final int? userId = await userService.loginUser(email, password);
 
     if (userId != null) {
-      Future<void> saveUserId(int userId) async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setInt('user_id', userId);
-      }
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => WelcomeView()),

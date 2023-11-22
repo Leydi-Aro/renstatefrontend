@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
+import 'package:renstatefrontend/shared/services/UserService.dart';
 import 'package:renstatefrontend/ui-initial-section/register_view.dart';
 import 'package:renstatefrontend/ui-initial-section/login_view.dart';
 
-class InitView extends StatelessWidget {
-  const InitView({super.key});
-  static String id = 'init_view';
+
+class InitView extends StatefulWidget {
+  @override
+  _InitViewState createState() => _InitViewState();
+}
+
+class _InitViewState extends State<InitView> {
+
+  late UserService userService = UserService();
+
+  @override
+  void initState() {
+    super.initState();
+    userService = UserService();
+    checkUserId();
+  }
+
+  Future<void> checkUserId() async {
+    final userId = await userService.getUserLogedId();
+    if (userId != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => SearchPage()),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    //final size = MediaQuery.of(context).size;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFF064789),
@@ -57,7 +83,9 @@ class InitView extends StatelessWidget {
         ),
       ),
     );
+
   }
+
 }
 
 ElevatedButton buildStyledButton(

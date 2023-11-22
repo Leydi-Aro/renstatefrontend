@@ -4,13 +4,15 @@ import 'package:renstatefrontend/see-your-clients/ui/see_clients.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
+import 'package:renstatefrontend/ui-initial-section/login_view.dart';
 
+import '../shared/services/UserService.dart';
 import '../shared/showImageProfile.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  ProfileView({super.key});
   static String id = 'profile_view';
-
+  late UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +63,14 @@ class ProfileView extends StatelessWidget {
                     FractionallySizedBox(
                       widthFactor: 0.5,
                       child: buttonApp(
-                          "Save",
+                          "LogOut",
                               (){
-
+                              print("DA");
+                              this.userService.removeUserLogedId();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => LoginView()),
+                              );
                           }
                       ),
                     ),

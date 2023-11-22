@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/shared/logo.dart';
+import 'package:renstatefrontend/shared/services/UserService.dart';
 import 'package:renstatefrontend/ui-initial-section/login_view.dart';
+import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
+
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+TextEditingController nameController = TextEditingController();
+TextEditingController lastNameController = TextEditingController();
+
 
 class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
-  static String id = 'register_view';
+
+  late UserService userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +22,7 @@ class RegisterView extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xFF78BCC4),
       body: Center(
-        child: SingleChildScrollView( // Envuelve el contenido en SingleChildScrollView
+        child: SingleChildScrollView(
           child: Column(
             children: [
               logo(),
@@ -38,7 +46,8 @@ class RegisterView extends StatelessWidget {
                     buttonApp(
                         "Register",
                         (){
-                          //Navigator.pushNamed(context, LoginView.id);
+                          _performRegister(nameController.text, lastNameController.text,
+                              emailController.text, passwordController.text, context);
                         }
                         )
                   ],
@@ -49,6 +58,19 @@ class RegisterView extends StatelessWidget {
         ),
       ),
     );
+  }
+  void _performRegister(String mame, String lastName, String email, String password, BuildContext context) async {
+    final int? userId = await userService.registerUser(mame, lastName,email, password);
+
+    print(userId);
+    print("==================================");
+    if (userId != null) {
+      userService.saveUserId(userId);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WelcomeView()),
+      );
+    }
   }
 }
 
@@ -97,10 +119,12 @@ Widget haveAccount(context){
 }
 
 Widget formRegister(){
+
   return Column(
     children: [
       TextField(
         keyboardType: TextInputType.emailAddress,
+        controller: nameController,
         decoration: InputDecoration(
           labelText: 'Name',
           labelStyle: TextStyle(
@@ -111,6 +135,7 @@ Widget formRegister(){
       ),
       TextField(
         keyboardType: TextInputType.emailAddress,
+        controller: lastNameController,
         decoration: InputDecoration(
           labelText: 'Last Name',
           labelStyle: TextStyle(
@@ -121,6 +146,7 @@ Widget formRegister(){
       ),
       TextField(
         keyboardType: TextInputType.emailAddress,
+        controller: emailController,
         decoration: InputDecoration(
           labelText: 'Email',
           labelStyle: TextStyle(
@@ -131,6 +157,7 @@ Widget formRegister(){
       ),
       TextField(
         keyboardType: TextInputType.emailAddress,
+        controller: passwordController,
         obscureText: true,
         decoration: InputDecoration(
           labelText: 'Password',
@@ -142,6 +169,7 @@ Widget formRegister(){
       ),
       TextField(
         keyboardType: TextInputType.emailAddress,
+        controller: passwordController,
         obscureText: true,
         decoration: InputDecoration(
           labelText: 'Confirm password',
