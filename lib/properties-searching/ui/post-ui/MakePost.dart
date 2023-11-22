@@ -11,6 +11,8 @@ import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../external-service/maps/maps.dart';
+
 
 class MakePost extends StatefulWidget {
   const MakePost({Key? key}) : super(key: key);
@@ -40,6 +42,18 @@ class _MakePostState extends State<MakePost> {
             formBox('Title', titleController, false),
             formBox('Description', descriptionController, false),
             formBox('Characteristics', characteristicsController,false),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GoogleMaps()),
+                  );
+                },
+                child: Text("Google Maps"),
+              ),
+            ),
             formBox('Location', locationController,false ),
             FractionallySizedBox(
               widthFactor: 0.5,

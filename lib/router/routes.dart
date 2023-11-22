@@ -8,6 +8,7 @@ import 'package:renstatefrontend/properties-searching/ui/post-ui/YourPosts.dart'
 import '../ui-initial-section/login_view.dart';
 import '../ui-initial-section/register_view.dart';
 import 'package:renstatefrontend/see-your-clients/ui/see_clients.dart';
+import 'package:renstatefrontend/external-service/maps/maps.dart';
 
 var customRoutes = <String, WidgetBuilder>{
   LoginView.id: (_) => LoginView(),
@@ -19,4 +20,5 @@ var customRoutes = <String, WidgetBuilder>{
   SearchPage.id: (_) => const SearchPage(),
   YourPosts.id: (_) => const YourPosts(),
   ClientsView.id: (_) => const ClientsView(),
+  GoogleMaps.id:(_)=>const GoogleMaps(),
 };
