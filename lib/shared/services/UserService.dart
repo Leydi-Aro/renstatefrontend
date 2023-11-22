@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
-  final String baseUrl= "http://192.168.135.66:8080/api/users";
+
+  //final String baseUrl= "http://192.168.135.66:8080/api/users";
+  final String baseUrl= "https://roomrest.azurewebsites.net/api/users";
 
   Future<int?> registerUser(String name, String lastName, String email, String password) async {
     try {
@@ -27,6 +29,31 @@ class UserService {
         if (responseData is int && responseData != 0) {
           return responseData;
 
+        }
+      } else {
+        print('Error en la solicitud HTTP: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('Error en la solicitud HTTP: $e');
+      return null;
+    }
+  }
+
+
+  Future<Map<String, dynamic>?> getUserById(int userId) async {
+    try {
+      final apiUrl = '$baseUrl/$userId';
+
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        final dynamic responseData = json.decode(response.body);
+
+        if (responseData is Map<String, dynamic>) {
+          return responseData;
+        } else {
+          return null;
         }
       } else {
         print('Error en la solicitud HTTP: ${response.statusCode}');

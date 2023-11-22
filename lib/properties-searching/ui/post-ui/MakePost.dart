@@ -195,7 +195,7 @@ class _MakePostState extends State<MakePost> {
                 price: double.parse(priceController.text), // Parsea el precio a double
                 category: selectedCategory,
                 author_id: 0,
-              ), _images);
+              ), _images,context);
         },
         child: Padding(
           padding: const EdgeInsets.all(10.0),

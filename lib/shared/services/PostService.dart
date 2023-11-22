@@ -2,8 +2,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:renstatefrontend/models/PostRequest.dart';
+import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/shared/services/MediaService.dart';
 import 'package:renstatefrontend/shared/services/UserService.dart';
 
@@ -16,11 +19,12 @@ class PostService {
   late MediaService mediaService = MediaService();
   final String apiUrl;
 
-  PostService():this.apiUrl='http://192.168.135.66:8080/api/posts';
-  //PostService():this.apiUrl='https://roomrest.azurewebsites.net/api/posts';
+  //PostService():this.apiUrl='http://192.168.135.66:8080/api/posts';
+  PostService():this.apiUrl='https://roomrest.azurewebsites.net/api/posts';
 
 
-  Future<void> createPost(PostRequest postRequest, List<File> _images) async {
+
+  Future<void> createPost(PostRequest postRequest, List<File> _images, BuildContext context,) async {
     try {
       final userId = await userService.getUserLogedId();
       postRequest.author_id = userId as int;
@@ -38,11 +42,9 @@ class PostService {
           msg: 'Post created successfully',
           toastLength: Toast.LENGTH_SHORT,
         );
-
-        print("==============================");
-        print("http://192.168.135.66:8080/api/media/post/" + jsonDecode(response.body)['id'].toString() + "/upload");
         print(response.body);
-        String apiUrlMedia = "http://192.168.135.66:8080/api/media/post/" + jsonDecode(response.body)['id'].toString() + "/upload";
+        String apiUrlMedia = "https://roomrest.azurewebsites.net/api/media/post/" + jsonDecode(response.body)['id'].toString() + "/upload";
+        //String apiUrlMedia = "https://roomrest.azurewebsites.net/api/media/post/" + jsonDecode(response.body)['id'].toString() + "/upload";
 
 
         try {
@@ -62,6 +64,10 @@ class PostService {
           var response = await request.send();
           if (response.statusCode == 200) {
             print("Images uploaded successfully");
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => SearchPage()),
+            );
           } else {
             print("Error uploading images. Status code: ${response.statusCode}");
           }
