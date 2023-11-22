@@ -1,16 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:renstatefrontend/models/PostRequest.dart';
-import 'package:renstatefrontend/properties-searching/ui/post-ui/ShowPosts.dart';
 import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../models/Post.dart';
 
 class MakePost extends StatefulWidget {
   const MakePost({Key? key}) : super(key: key);
@@ -27,6 +27,7 @@ class _MakePostState extends State<MakePost> {
   TextEditingController imageUrlController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController locationController = TextEditingController();
+  File? _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,28 @@ class _MakePostState extends State<MakePost> {
             formBox('Description', descriptionController, false),
             formBox('Characteristics', characteristicsController,false),
             formBox('Location', locationController,false ),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: ElevatedButton(
+                onPressed: (){_pickImage(ImageSource.gallery);},
+                  child: Text("Gallery"),
+              ),
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: ElevatedButton(
+                onPressed: (){_pickImage(ImageSource.camera);},
+                child: Text("Camera"),
+              ),
+            ),
+            if (_imageFile != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 200,
+                    child: Image.file(_imageFile!, fit: BoxFit.contain)
+                ),
+              ),
             formBox('Image URL', imageUrlController, false),
             selectCategory(),
             formBox('Price', priceController, true),
@@ -147,6 +170,21 @@ class _MakePostState extends State<MakePost> {
     );
   }
 
+
+  // Nuevo método para seleccionar o tomar una foto
+  Future<void> _pickImage(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().getImage(source: imageSource);
+
+    if (pickedFile != null) {
+      setState(() {
+        imageUrlController.text = pickedFile.path;
+        _imageFile = File(pickedFile.path);
+        imageUrlController.selection = TextSelection.fromPosition(TextPosition(offset: imageUrlController.text.length));
+      });
+    }
+  }
+
+
   Future<void> createPost() async {
 
     final String apiUrl = 'https://roomrest.azurewebsites.net/api/posts';
@@ -174,6 +212,7 @@ class _MakePostState extends State<MakePost> {
       print('Post created successfully');
       Fluttertoast.showToast(msg: 'Post created successfully',
       toastLength: Toast.LENGTH_SHORT);
+      print(newPost.toString());
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context)=>SearchPage())

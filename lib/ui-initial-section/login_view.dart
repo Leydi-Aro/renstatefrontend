@@ -5,8 +5,11 @@ import 'package:renstatefrontend/ui-initial-section/register_view.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  LoginView({super.key});
   static String id = 'login_view';
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPassword = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +49,8 @@ class LoginView extends StatelessWidget {
                   buttonApp(
                     "Log In",
                       (){
+
+
                         Navigator.pushNamed(context, WelcomeView.id);
                       }
                   )
@@ -121,7 +126,6 @@ Widget emailInput(){
 Widget passwordInput(){
   return Container(
     child: TextField(
-      keyboardType: TextInputType.emailAddress,
       obscureText: true,
       decoration: InputDecoration(
         labelText: 'Password',
