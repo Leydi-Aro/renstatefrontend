@@ -33,11 +33,9 @@ class _ShowPostsState extends State<ShowPosts> {
 
   @override
   void initState() {
-
-    postsList = [];
-
     super.initState();
-    _posts = postService.getPosts();
+
+    _posts = _loadPosts();
 
     if(category != '') {
       _posts = _posts.then((posts) {
@@ -50,10 +48,20 @@ class _ShowPostsState extends State<ShowPosts> {
       });
     }
 
-
   }
-  Widget searchDesign() {
 
+  Future<List<Post>> _loadPosts() async {
+    try {
+      final List<Post> posts = await postService.getPosts();
+      return posts;
+    } catch (e) {
+      print('Error cargando posts: $e');
+      throw e;
+    }
+  }
+
+
+  Widget searchDesign() {
 
     return FractionallySizedBox(
       widthFactor: 0.9,
@@ -194,7 +202,7 @@ Widget viewPost(BuildContext context, Post post) {
               FractionallySizedBox(
                 widthFactor: 0.5,
                 child: Image(
-                  image: NetworkImage(post.imgUrl),
+                  image: NetworkImage(post.imageUrls[0]),
                   fit: BoxFit.cover,
                 ),
               ),

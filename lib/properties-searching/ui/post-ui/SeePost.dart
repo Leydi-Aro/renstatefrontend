@@ -82,7 +82,7 @@ class _SeePostState extends State<SeePost> {
           padding: const EdgeInsets.only(top:20.0),
           child: Image(
             image: NetworkImage(
-              post.imgUrl
+              post.imageUrls[0]
             ),
           ),
         ),
