@@ -1,12 +1,11 @@
 class PostRequest {
-  final String title;
-  final String description;
-  final String characteristics;
-  final String location;
-  final double price;
-  final String imgUrl;
-  final String category;
-  final int author_id;
+  String title;
+  String description;
+  String characteristics;
+  String location;
+  double price;
+  String category;
+  int author_id;
 
   PostRequest({
     required this.title,
@@ -14,7 +13,6 @@ class PostRequest {
     required this.characteristics,
     required this.location,
     required this.price,
-    required this.imgUrl,
     required this.category,
     required this.author_id,
   });
@@ -26,7 +24,6 @@ class PostRequest {
       'characteristics': characteristics,
       'location': location,
       'price': price,
-      'imgUrl': imgUrl,
       'category': category,
       'author_id': author_id,
     };

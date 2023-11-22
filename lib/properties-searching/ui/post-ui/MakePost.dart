@@ -1,15 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:renstatefrontend/models/PostRequest.dart';
-import 'package:renstatefrontend/properties-searching/ui/search_page.dart';
 import 'package:renstatefrontend/shared/appBarApp.dart';
 import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:http/http.dart' as http;
+import 'package:renstatefrontend/shared/services/MediaService.dart';
+import 'package:renstatefrontend/shared/services/PostService.dart';
+import 'package:renstatefrontend/shared/services/UserService.dart';
 
 import '../../../external-service/maps/maps.dart';
 
@@ -22,14 +22,21 @@ class MakePost extends StatefulWidget {
 }
 
 class _MakePostState extends State<MakePost> {
+
+  PostService postService = PostService();
+  MediaService mediaService = MediaService();
+  UserService userService = UserService();
+
   String selectedCategory = 'room';
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController characteristicsController = TextEditingController();
-  TextEditingController imageUrlController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController locationController = TextEditingController();
-  File? _imageFile;
+  //File? _imageFile;
+
+  List<File> _images = [];
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,29 +62,36 @@ class _MakePostState extends State<MakePost> {
               ),
             ),
             formBox('Location', locationController,false ),
-            FractionallySizedBox(
-              widthFactor: 0.5,
-              child: ElevatedButton(
-                onPressed: (){_pickImage(ImageSource.gallery);},
+
+            Text("Seleccion imagenes de tu inmueble",style:
+              TextStyle(
+                fontSize: 15.0
+              ),
+            textAlign: TextAlign.center,),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: (){_pickImage(ImageSource.camera);},
+                  child: Text("Camera"),
+                ),
+                SizedBox(width: 25.0),
+                ElevatedButton(
+                  onPressed: (){_pickImage(ImageSource.gallery);},
                   child: Text("Gallery"),
-              ),
+                ),
+              ],
             ),
-            FractionallySizedBox(
-              widthFactor: 0.5,
-              child: ElevatedButton(
-                onPressed: (){_pickImage(ImageSource.camera);},
-                child: Text("Camera"),
-              ),
-            ),
-            if (_imageFile != null)
+            if (!_images.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   height: 200,
-                    child: Image.file(_imageFile!, fit: BoxFit.contain)
+                    child: Image.file(_images.last, fit: BoxFit.contain)
                 ),
               ),
-            formBox('Image URL', imageUrlController, false),
+
             selectCategory(),
             formBox('Price', priceController, true),
             Padding(
@@ -89,7 +103,9 @@ class _MakePostState extends State<MakePost> {
       ),
       bottomNavigationBar: bottomNavigationApp(context),
     );
+
   }
+
 
   //type = 0 : text
   //type = 1 : only number
@@ -141,7 +157,7 @@ class _MakePostState extends State<MakePost> {
             ),
             child: DropdownButton<String>(
               value: selectedCategory,
-              items: ['room', 'commercialSpace', 'home', 'department']
+              items: ['room', 'commercialSpace', 'house', 'department']
                   .map((category) {
                 return DropdownMenuItem<String>(
                   value: category,
@@ -170,7 +186,16 @@ class _MakePostState extends State<MakePost> {
           backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF064789)),
         ),
         onPressed: () {
-          createPost();
+          postService.createPost(
+              new PostRequest(
+                title: titleController.text,
+                description: descriptionController.text,
+                characteristics: characteristicsController.text,
+                location: locationController.text,
+                price: double.parse(priceController.text), // Parsea el precio a double
+                category: selectedCategory,
+                author_id: 0,
+              ), _images);
         },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -191,50 +216,8 @@ class _MakePostState extends State<MakePost> {
 
     if (pickedFile != null) {
       setState(() {
-        imageUrlController.text = pickedFile.path;
-        _imageFile = File(pickedFile.path);
-        imageUrlController.selection = TextSelection.fromPosition(TextPosition(offset: imageUrlController.text.length));
+        _images.add(File(pickedFile.path));
       });
-    }
-  }
-
-
-  Future<void> createPost() async {
-
-    final String apiUrl = 'https://roomrest.azurewebsites.net/api/posts';
-
-    final PostRequest newPost = PostRequest(
-      title: titleController.text,
-      description: descriptionController.text,
-      characteristics: characteristicsController.text,
-      location: locationController.text,
-      price: double.parse(priceController.text),
-      imgUrl: imageUrlController.text,
-      category: selectedCategory,
-      author_id: 1,
-    );
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(newPost.toJson()),
-    );
-
-    if (response.statusCode == 200) {
-      print('Post created successfully');
-      Fluttertoast.showToast(msg: 'Post created successfully',
-      toastLength: Toast.LENGTH_SHORT);
-      print(newPost.toString());
-      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context)=>SearchPage())
-      );
-    } else {
-      print('Error creating post: ${response.statusCode}');
-      Fluttertoast.showToast(msg: 'Error creating post',
-          toastLength: Toast.LENGTH_SHORT);
     }
   }
 
