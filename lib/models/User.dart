@@ -6,7 +6,7 @@ class User {
   final int age;
   final String gender;
   final String description;
-  final int rankPoints;
+  final double rankPoints;
 
   User({
     required this.id,
@@ -28,7 +28,7 @@ class User {
       age: json['age'] as int? ?? 0,
       gender: json['gender'] ?? '',
       description: json['description'] ?? '',
-      rankPoints: json['rankPoints'] as int? ?? 0,
+      rankPoints: json['rankPoints'] as double? ?? 0,
     );
   }
 }

@@ -7,16 +7,56 @@ import 'package:renstatefrontend/ui-initial-section/terms_condition.dart';
 import 'package:renstatefrontend/ui-initial-section/welcome_view.dart';
 
 class LoginView extends StatefulWidget {
+
+
   @override
   _LoginViewState createState() => _LoginViewState();
+
 }
 
 class _LoginViewState extends State<LoginView> {
 
   late UserService userService = UserService();
+  bool _activeLogin=false;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  Widget acceptTerms(context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Checkbox(
+            value: _activeLogin,
+            onChanged: (newValue) {
+              setState(() {
+                _activeLogin = newValue!;
+              });
+              // Aquí puedes agregar la lógica para manejar el cambio de valor del checkbox
+            },
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TermsAndConditionsView()),
+              );
+            },
+            child: Text(
+              ' Terms and conditions',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF064789),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
 
   @override
@@ -68,12 +108,16 @@ class _LoginViewState extends State<LoginView> {
                   notHaveAccount(context),
                   acceptTerms(context),
                   buttonApp(
-                    "Log In",
-                      (){
-                      print(emailController.text);
-                      print(passwordController.text);
-                      _performLogin(emailController.text, passwordController.text, context);
+                      "Log In",
+                          (){
 
+                        if (_activeLogin) {
+                          print(emailController.text);
+                          print(passwordController.text);
+                          _performLogin(
+                              emailController.text, passwordController.text,
+                              context);
+                        }
                       }
                   )
                 ],
@@ -139,52 +183,19 @@ Widget notHaveAccount(context){
   );
 }
 
-Widget acceptTerms(context) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "",
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TermsAndConditionsView()),
-            );
-          },
-          child: Text(
-            'Do you accept the terms and conditions?',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF064789),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
 
 
 
 
 Widget textLogin(){
-    return Text(
-      'Log In',
-      style: TextStyle(
-        fontSize: 40.0,
-        fontWeight: FontWeight.bold,
-        color: Color(0xFF064789),
-      ),
-    );
+  return Text(
+    'Log In',
+    style: TextStyle(
+      fontSize: 40.0,
+      fontWeight: FontWeight.bold,
+      color: Color(0xFF064789),
+    ),
+  );
 }
 
 Widget emailInput(TextEditingController controller){
@@ -205,18 +216,18 @@ Widget emailInput(TextEditingController controller){
 }
 Widget passwordInput(TextEditingController controller){
   return Container(
-    child: TextField(
-      controller: controller,
-      keyboardType: TextInputType.emailAddress,
-      obscureText: true,
-      decoration: InputDecoration(
-        labelText: 'Password',
-        labelStyle: TextStyle(
-          color: Color.fromARGB(255, 12, 11, 11),
-          fontWeight: FontWeight.w700,
+      child: TextField(
+        controller: controller,
+        keyboardType: TextInputType.emailAddress,
+        obscureText: true,
+        decoration: InputDecoration(
+          labelText: 'Password',
+          labelStyle: TextStyle(
+            color: Color.fromARGB(255, 12, 11, 11),
+            fontWeight: FontWeight.w700,
+          ),
         ),
-      ),
-      onChanged: (value) {},
-    )
+        onChanged: (value) {},
+      )
   );
 }

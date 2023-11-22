@@ -6,13 +6,33 @@ import 'package:renstatefrontend/shared/bottomNavigationApp.dart';
 import 'package:renstatefrontend/shared/buttonApp.dart';
 import 'package:renstatefrontend/ui-initial-section/login_view.dart';
 
+import '../models/User.dart';
 import '../shared/services/UserService.dart';
 import '../shared/showImageProfile.dart';
 
-class ProfileView extends StatelessWidget {
-  ProfileView({super.key});
-  static String id = 'profile_view';
-  late UserService userService = UserService();
+class ProfileView extends StatefulWidget {
+  ProfileView({Key? key}) : super(key: key);
+
+  @override
+  _ProfileViewState createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+
+  late Future<User> _userApi;
+  late User user;
+
+  final userService = UserService();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _userApi = userService.getUserById(1);
+    _userApi.then((value) => {
+      user = value,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,87 +41,103 @@ class ProfileView extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromARGB(255, 7, 64, 129),
       appBar: appBarApp(context),
-      body: Center(
-        child: ListView(
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: showImageProfile(),
-                ),
-                Text(
-                  'Rafael Lopez Perez',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 239, 237, 237),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
-              child: FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
 
-                    cardInfo(context, "Rafael"),
-                    cardInfo(context, "Lopez Perez"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:[
-                        cardInfo(context, "33"),
-                        cardInfo(context, "Male"),
-                      ]
-                    ),
-                    cardInfo(context, "rafael@gmail.com"),
-                    cardInfo(context, "Here is description about of user"),
-                    SizedBox(height: 20.0,),
-                    FractionallySizedBox(
-                      widthFactor: 0.5,
-                      child: buttonApp(
-                          "LogOut",
-                              (){
-                              print("DA");
-                              this.userService.removeUserLogedId();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => LoginView()),
-                              );
-                          }
+      body:FutureBuilder(
+        future: _userApi,
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }else if(snapshot.hasError){
+            print(snapshot.error);
+            return Text("Error");
+          }else if(!snapshot.hasData){
+            return Text("No data available");
+          }else{
+            return Center(
+              child: ListView(
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: showImageProfile(),
+                      ),
+                      Text(
+                        user.name+" "+user.lastName,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 239, 237, 237),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15.0),
+                    child: FractionallySizedBox(
+                      widthFactor: 0.9,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          cardInfo(context, user.name),
+                          cardInfo(context, user.lastName),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children:[
+                                cardInfo(context, user.age.toString()),
+                                cardInfo(context, user.gender),
+                              ]
+                          ),
+                          cardInfo(context, user.email),
+                          cardInfo(context, "Here is description about of user"),
+                          SizedBox(height: 20.0,),
+                          FractionallySizedBox(
+                            widthFactor: 0.5,
+                            child: buttonApp(
+                                "LogOut",
+                                    (){
+                                  this.userService.removeUserLogedId();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => LoginView()),
+                                  );
+                                }
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          FractionallySizedBox(
+                            widthFactor: 0.5,
+                            child: buttonApp(
+                                "Your Clients",
+                                    (){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context)=>ClientsView()));
+                                }),
+                          ),
+                          SizedBox(height: 5,),
+                          FractionallySizedBox(
+                            widthFactor: 0.5,
+                            child: buttonApp(
+                                "Your Posts",
+                                    (){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context)=>YourPosts(3)));
+                                }),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 5,),
-                    FractionallySizedBox(
-                      widthFactor: 0.5,
-                      child: buttonApp(
-                          "Your Clients",
-                          (){
-                            Navigator.push(
-                              context,
-                            MaterialPageRoute(builder: (context)=>ClientsView()));
-                          }),
-                    ),
-                    SizedBox(height: 5,),
-                    FractionallySizedBox(
-                      widthFactor: 0.5,
-                      child: buttonApp(
-                          "Your Posts",
-                              (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context)=>YourPosts(3)));
-                          }),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+            );
+          }
+        },
       ),
       bottomNavigationBar: bottomNavigationApp(context),
     );

@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:renstatefrontend/models/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
@@ -41,28 +42,17 @@ class UserService {
   }
 
 
-  Future<Map<String, dynamic>?> getUserById(int userId) async {
-    try {
+  Future<User> getUserById(int userId) async {
       final apiUrl = '$baseUrl/$userId';
 
       final response = await http.get(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
-        final dynamic responseData = json.decode(response.body);
-
-        if (responseData is Map<String, dynamic>) {
-          return responseData;
-        } else {
-          return null;
-        }
+        final dynamic jsonData = json.decode(utf8.decode(response.bodyBytes));
+          return User.fromJson(jsonData);
       } else {
-        print('Error en la solicitud HTTP: ${response.statusCode}');
-        return null;
+        throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
       }
-    } catch (e) {
-      print('Error en la solicitud HTTP: $e');
-      return null;
-    }
   }
 
 

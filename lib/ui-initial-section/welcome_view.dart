@@ -39,11 +39,14 @@ class WelcomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0), // Espacio vertical entre el Card y el botón
+                  SizedBox(height: 20.0),
                   buttonApp(
                     "Profile",
                         () {
-                      Navigator.pushNamed(context, ProfileView.id);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProfileView()),
+                          );
                     },
                   ),
                 ],
